@@ -1,0 +1,281 @@
+# See https://github.com/check-spelling/check-spelling/wiki/Configuration-Examples:-patterns
+
+\[[a-z]\]\w+
+
+\{(?:[-A-Z\d]{4}\|)+[-A-Z\d]{4}
+\{(?:[a-f\d]{8}\|)+[a-f\d]{8}
+\\x[0-9A-F]{2}
+\b(?:)acl(?=[a-z]{2,})
+\b(?:)all(?!ig|o[ctw])(?=[a-z]{2,})
+\b(?:)aof(?=[a-z]{2,})
+\b(?:)append(?!ing)(?=[a-z]{2,})
+\b(?:)array(?!ing)(?=[a-z]{2,})
+(?<!\\)\b(?:)bg(?=[a-z]{2,})
+\b(?:)args(?=[a-z]{2,})
+\b(?:)big(?!ger|gest)(?=[a-z]{2,})
+\b(?:)bit(?:sin|)(?=[a-z]{2,})
+\b(?:)buf(?!fer)(?=[a-z]{2,})
+(?<!\\)\b(?:)by(?!te)(?=[a-z]{3,})
+\b(?:)channel(?=[a-z]{2,})
+\b(?:)client(?=[a-z]{2,})
+\b(?:)cmd(?=[a-z]{2,})
+\b(?:)crc(?=[a-z])
+\b(?:)cur(?:r(?=user)|)(?!(?:rent(?:ly|)|sors?)(?:\b|_))(?:rent|)(?=[a-zA-Z][a-z]+)
+\b(?:)debug(?!g)(?=[a-z])
+\b(?:)dst(?=[a-z])
+\b(?:)empty(?=[a-z]{2,})
+\b(?:)end(?![aeiou])(?=[a-z])
+\b(?:)error(?=[a-z]{2,})
+\b(?:)hash(?!ing)(?=[a-z]{2,})
+\b(?:)geo(?![m])(?=[a-z])
+\b(?:)get(?!ting)(?=[a-z]{2,})
+\b(?:)hello(?=[a-z]{2,})
+\b(?:)invalid(?!at)(?=[a-z]{2,})
+\b(?:)key(?=[a-z]{2,})
+\b(?:)last(?=[a-z]{2,})
+\b(?:)load(?![i])(?=[a-z]{3,})
+\b(?:)log(?![agi])(?=[a-z]{3,})
+\b(?:)master(?=[a-z]{3,})
+\b(?:)max(?!im)(?=[a-z]{2,})
+\b(?:)MAX(?=[A-Z]{3,})
+\b(?:)mem(?!ber|or)(?=[a-z]{2,})
+\b(?:)module(?=[a-z]{2,})
+\b(?:)multi(?!p)(?=[a-z]{2,})
+\b(?:)my(?=[a-z]{2,})
+\b(?:)new(?=[a-z]{3,})
+\b(?:)node(?!fa|l)(?=[a-z]{2,})
+\b(?:)num(?!ber|erat|eric|erous)(?=[a-z]{2,})
+\b(?:)old(?=[a-z]{3,})
+\b(?:)other(?=[a-z]{3,})
+\b(?:)ping(?!i)(?=[a-z]{3,})
+\b(?:)primary(?=[a-z]{3,})
+\b(?:)random(?!i)(?=[a-z]{3,})
+\b(?:)range(?=[a-z]{3,})
+\b(?:)raw(?=[a-z]{2,})
+(?<=_|\b)(?:)rdb(?=[a-z]{3,})
+\b(?:)read(?!i)(?=[a-z]{2,})
+\b(?:)real(?!i|locs)(?=[a-z]{3,})
+\b(?:)remrangeby(?=[a-z]{2,})
+\b(?:)replica(?!t(?:e[ds]|ing|ion))(?=[a-z]{3,})
+\b(?:)reply(?!ing)(?=[a-z]{3,})
+\b(?:)save(?=[a-z]{2,})
+\b(?:)score(?=[a-z]{2,})
+\b(?:)sds(?=[a-z]{3,})
+\b(?:)seek(?!e|in)(?=[a-z]{2,})
+\b(?:)set(?!ting|tle)(?=[a-z]{3,})
+\b(?:)server(?=[a-z]{2,})
+\b(?:)set(?!t|up)(?=[a-z]{2,})
+\b(?:)shard(?!ing)(?=[a-z]{2,})
+\b(?:)sig(?!n)(?=[a-z]{2,})
+\b(?:)skip(?!p(?:ed|ing))(?=[a-z]{3,})
+\b(?:)small(?!est)(?=[a-z]{3,})
+\b(?:)some(?![htw])(?=[a-z]{2,})
+\b(?:)split(?!t)(?=[a-z]{2,})
+\b(?:)src(?=[a-z]{2,})
+\b(?:)start(?=[a-z]{3,})
+\b(?:)test(?=[a-z]{3,})
+\b(?:)this(?=[a-z]{2,})
+\b(?:)tmp(?=[a-z]{3,})
+\b(?:)valkey(?=[a-z]{3,})
+\b(?:)with(?=[a-z]{3,})
+\b(?:)z(?![aehiou])(?=[a-z]{2,})
+\b(?:)z(?:set|try|union)
+
+(?:(?<=\b[A-Z]{2})|(?<=\b[A-Z]{3})|(?<=\b[A-Z]{4})|(?<=\b[A-Z]{5}))ed\b
+
+Georg Nees
+
+\br geoadd points .*
+
+create_quicklist lst ".*"
+
+assert_(?:equal|match) .*
+
+# list.tcl
+r lpush notfoo.*
+
+\(unsigned char \*\)"\w+"
+
+\\a(?=\w)
+
+# list-3.tcl
+set mylist \{.+\}
+
+# Automatically suggested patterns
+
+# hit-count: 2355 file-count: 58
+# hex runs
+\b[0-9a-fA-F]{16,}\b
+
+# hit-count: 1746 file-count: 610
+# #includes
+^\s*#include\s*(?:<.*?>|".*?")
+
+# hit-count: 1691 file-count: 100
+# hex digits including css/html color classes:
+(?:[\\0][xX]|\\u\{?|[uU]\+|#x?|%23|&H)[0-9_a-fA-FgGrR]*?[a-fA-FgGrR]{2,}[0-9_a-fA-FgGrR]*(?:[uUlL]{0,3}|[iu]\d+)\b
+
+# hit-count: 907 file-count: 112
+# libraries
+(?:\b|_)[Ll]ib(?:re(?=office)|)(?!era[lt]|ero|erty|rar(?:i(?:an|es)|y))(?=[a-z])
+
+# hit-count: 874 file-count: 75
+# Compiler flags (Unix, Java/Scala)
+# Use if you have things like `-Pdocker` and want to treat them as `docker`
+(?:^|[\t ,>"'`=(#])-(?:D(?!EBUG|ENIED)|W(?!RONG|riting)|[PXY]|f(?!ail|ill|orce|orm)|l(?!ib|ine|int|ength))(?=[A-Z]{2,}|[A-Z][a-z]|[a-z]{2,})
+
+# hit-count: 393 file-count: 51
+# version suffix <word>v#
+(?<!re)(?:(?<=[A-Z]{2})V|(?<=[a-z]{2}|[A-Z]{2})v)\d+(?:\b|(?=[a-zA-Z_]))
+
+# hit-count: 267 file-count: 136
+# https/http/file urls
+(?:\b(?:https?|ftp|file)://)[-A-Za-z0-9+&@#/*%?=~_|!:,.;]+[-A-Za-z0-9+&@#/*%=~_|]
+
+# hit-count: 247 file-count: 66
+# C network byte conversions
+(?:\d|\bh)to(?!ken)(?=[a-z])|to(?=[adhiklpun]\()
+
+# hit-count: 239 file-count: 47
+# in check-spelling@v0.0.22+, printf markers aren't automatically consumed
+# printf markers
+(?<!\\)\\[nrt](?=[a-z]{2,})
+
+# hit-count: 193 file-count: 45
+# alternate printf markers if you run into latex and friends
+(?<!\\)\\[nrt](?=[a-z]{2,})(?=.*['"`])
+
+# hit-count: 145 file-count: 101
+# copyright
+Copyright (?:\([Cc]\)|)(?:[-\d, ]|and)+(?: [A-Z][a-z]+ (?:[A-Z]\. |)[A-Z][a-z]+,?)+(?:\s<.*?>|)
+
+# hit-count: 105 file-count: 15
+# GitHub actions
+\buses:\s+[-\w.]+/[-\w./]+@[-\w.]+
+
+# hit-count: 60 file-count: 14
+# Repeated letters
+\b([a-z])\g{-1}{2,}\b
+
+# hit-count: 30 file-count: 7
+# Intel intrinsics
+_mm\d*_(?!dd)\w+
+
+# hit-count: 26 file-count: 2
+# latex (check-spelling >= 0.0.22)
+\\\w{2,}\{
+
+# hit-count: 23 file-count: 5
+# ANSI color codes
+(?:\\(?:u00|x)1[Bb]|\\03[1-7]|\x1b|\\u\{1[Bb]\})\[\d+(?:;\d+)*m
+
+# hit-count: 19 file-count: 5
+# Markdown anchor links
+\(#\S*?[a-zA-Z]\S*?\)
+
+# hit-count: 16 file-count: 6
+# uuid:
+\b[0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}\b
+
+# hit-count: 14 file-count: 8
+# Alternatively, if you're using check-spelling v0.0.25+, and you would like to _check_ the Non-English content for spelling errors, you can. For information on how to do so, see:
+# https://docs.check-spelling.dev/Feature:-Configurable-word-characters.html#unicode
+[a-zA-Z]*[ÀÁÂÃÄÅÆČÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæčçèéêëìíîïðñòóôõöøùúûüýÿĀāŁłŃńŅņŒœŚśŠšŜŝŸŽžź][a-zA-Z]{3}[a-zA-ZÀÁÂÃÄÅÆČÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæčçèéêëìíîïðñòóôõöøùúûüýÿĀāŁłŃńŅņŒœŚśŠšŜŝŸŽžź]*|[a-zA-Z]{3,}[ÀÁÂÃÄÅÆČÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæčçèéêëìíîïðñòóôõöøùúûüýÿĀāŁłŃńŅņŒœŚśŠšŜŝŸŽžź]|[ÀÁÂÃÄÅÆČÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæčçèéêëìíîïðñòóôõöøùúûüýÿĀāŁłŃńŅņŒœŚśŠšŜŝŸŽžź][a-zA-Z]{3,}
+
+# hit-count: 14 file-count: 7
+# This does not cover multiline strings, if your repository has them,
+# you'll want to remove the `(?=.*?")` suffix.
+# The `(?=.*?")` suffix should limit the false positives rate
+# printf
+%(?:(?:(?:hh?|ll?|[jzt])?(?:d(?!isable)|[iuoxn])|l?[cs]|L?[fega]|p)(?=[a-z]{2,})|(?:X|L?[FEGA])(?=[a-zA-Z]{2,}))(?!%)(?=[_a-zA-Z]+(?!%)\b)(?=.*?['"])
+
+# hit-count: 14 file-count: 1
+# perl regex test
+[!=]~ (?:/.*/|m\{.*?\}|m<.*?>|m([|!/@#,;']).*?\g{-1})
+
+# hit-count: 10 file-count: 3
+# python
+\b(?i)py(?!gments|gmy|lon|ramid|ro|th)(?=[a-z]{2,})
+
+# hit-count: 8 file-count: 1
+# Contributor
+\[[^\]]+\]\(https://github\.com/[^/\s"]+/?\)
+
+# hit-count: 4 file-count: 3
+# tar arguments
+\b(?:\\n|)g?tar(?:\.exe|)(?:(?:\s+--[-a-zA-Z]+|\s+-[a-zA-Z]+|\s[ABGJMOPRSUWZacdfh-pr-xz]+\b)(?:=[^ ]*|))+
+
+# hit-count: 2 file-count: 2
+# imports
+^import\s+(?:(?:static|type)\s+|)(?:[\w.]|\{\s*\w*?(?:,\s*(?:\w*|\*))+\s*\})+
+
+# hit-count: 1 file-count: 1
+# css fonts
+\bfont(?:-family|):[^;}]+
+
+# hit-count: 1 file-count: 1
+# C# includes
+^\s*using [^;]+;
+
+# hit-count: 1 file-count: 1
+# Python string prefix / binary prefix
+# Note that there's a high false positive rate, remove the `?=` and search for the regex to see if the matches seem like reasonable strings
+(?<!['"])\b(?:B|BR|Br|F|FR|Fr|R|RB|RF|Rb|Rf|U|UR|Ur|b|bR|br|f|fR|fr|r|rB|rF|rb|rf|u|uR|ur)['"](?=[A-Z]{3,}|[A-Z][a-z]{2,}|[a-z]{3,})
+
+# hit-count: 1 file-count: 1
+# sed regular expressions
+sed 's/(?:[^/]*?[a-zA-Z]{3,}[^/]*?/){2}
+
+# hit-count: 1 file-count: 1
+# go install
+go install(?:\s+[a-z]+\.[-@\w/.]+)+
+
+# hit-count: 1 file-count: 1
+# URL escaped characters
+%[0-9A-F][A-F](?=[A-Za-z])
+
+# Questionably acceptable forms of `in to`
+# Personally, I prefer `log into`, but people object
+# https://www.tprteaching.com/log-into-log-in-to-login/
+\b(?:(?:[Ll]og(?:g(?=[a-z])|)|[Ss]ign)(?:ed|ing)?) in to\b
+
+# to opt in
+\bto opt in\b
+
+# pass(ed|ing) in
+\bpass(?:ed|ing) in\b
+
+# acceptable duplicates
+# ls directory listings
+[-bcdlpsw](?:[-r][-w][-SsTtx]){3}[\.+*]?\s+\d+\s+\S+\s+\S+\s+[.\d]+(?:[KMGT]|)\s+
+# mount
+\bmount\s+-t\s+(\w+)\s+\g{-1}\b
+# C types and repeated CSS values
+\s(arg|auto|bla|buffalo|center|defaults|div|ele|end|hash|inherit|key|left|LEFT|long|Long|LONG|none|normal|solid|src|test|thin|transparent|VALKEY|very|Zhao)(?:\s\g{-1})+\s
+# C enum and struct
+\b(?:enum|struct)\s+(\w+)\s+\g{-1}\b
+# go templates
+\s(\w+)\s+\g{-1}\s+\`(?:graphql|inject|json|yaml):
+# doxygen / javadoc / .net
+(?:[\\@](?:brief|defgroup|groupname|link|t?param|return|retval)|(?:public|private|\[Parameter(?:\(.+\)|)\])(?:\s+(?:static|override|readonly|required|virtual))*)(?:\s+\{\w+\}|)\s+(\w+)\s+\g{-1}\s
+
+# macOS file path
+(?:Contents\W+|(?!iOS)/)MacOS\b
+
+# Python package registry has incorrect spelling for macOS / Mac OS X
+"Operating System :: MacOS :: MacOS X"
+
+# "company" in Germany
+\bGmbH\b
+
+# IntelliJ
+\bIntelliJ\b
+
+# Commit message -- Signed-off-by and friends
+^\s*(?:(?:Based-on-patch|Co-authored|Helped|Mentored|Reported|Reviewed|Signed-off)-by|Thanks-to): (?:[^<]*<[^>]*>|[^<]*)\s*$
+
+# Autogenerated revert commit message
+^This reverts commit [0-9a-f]{40}\.$
+
+# ignore long runs of a single character:
+\b([A-Za-z])\g{-1}{3,}\b
