@@ -5,3 +5,4 @@ formatter:
 
 exclude:
   - "deps/"
+  - .github/workflows/spelling.yml

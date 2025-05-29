@@ -3,6 +3,7 @@
 [files]
 extend-exclude = [
     ".git/",
+    ".github/actions/spelling/",
     "deps/",
     # crc16_slottable is primarily pre-generated random strings.
     "src/crc16_slottable.h",
