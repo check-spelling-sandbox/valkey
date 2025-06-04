@@ -142,7 +142,7 @@ int scriptPrepareForRun(scriptRunCtx *run_ctx,
 
     if (!(script_flags & SCRIPT_FLAG_EVAL_COMPAT_MODE)) {
         if ((script_flags & SCRIPT_FLAG_NO_CLUSTER) && server.cluster_enabled) {
-            addReplyError(caller, "Can not run script on cluster, 'no-cluster' flag is set.");
+            addReplyError(caller, "Cannot run script on cluster, 'no-cluster' flag is set.");
             return C_ERR;
         }
 
@@ -159,7 +159,7 @@ int scriptPrepareForRun(scriptRunCtx *run_ctx,
              * 2. no disk error detected
              * 3. command is not `fcall_ro`/`eval[sha]_ro` */
             if (server.primary_host && server.repl_replica_ro && !obey_client) {
-                addReplyError(caller, "-READONLY Can not run script with write flag on readonly replica");
+                addReplyError(caller, "-READONLY Cannot run script with write flag on readonly replica");
                 return C_ERR;
             }
 
@@ -184,7 +184,7 @@ int scriptPrepareForRun(scriptRunCtx *run_ctx,
             }
 
             if (ro) {
-                addReplyError(caller, "Can not execute a script with write flag using *_ro command.");
+                addReplyError(caller, "Cannot execute a script with write flag using *_ro command.");
                 return C_ERR;
             }
 
@@ -201,7 +201,7 @@ int scriptPrepareForRun(scriptRunCtx *run_ctx,
         if (!client_allow_oom && server.pre_command_oom_state && server.maxmemory &&
             !(script_flags & (SCRIPT_FLAG_ALLOW_OOM | SCRIPT_FLAG_NO_WRITES))) {
             addReplyError(caller, "-OOM allow-oom flag is not set on the script, "
-                                  "can not run it when used memory > 'maxmemory'");
+                                  "cannot run it when used memory > 'maxmemory'");
             return C_ERR;
         }
 
@@ -521,8 +521,8 @@ static int scriptVerifyAllowStale(client *c, sds *err) {
         return C_OK;
     }
 
-    /* On stale replica, can not run the command */
-    *err = sdsnew("Can not execute the command on a stale replica");
+    /* On stale replica, cannot run the command */
+    *err = sdsnew("Cannot execute the command on a stale replica");
     return C_ERR;
 }
 

@@ -184,7 +184,7 @@ start_cluster 3 0 [list config_lines $modules] {
     }
 
     test "Verify command RM_Call is rejected when cluster is down" {
-        assert_error "ERR Can not execute a command 'set' while the cluster is down" {$node1 do_rm_call set x 1}
+        assert_error "ERR Cannot execute a command 'set' while the cluster is down" {$node1 do_rm_call set x 1}
     }
 
     test "Verify Module Auth Succeeds when cluster is down" {

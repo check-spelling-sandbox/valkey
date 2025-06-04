@@ -942,7 +942,7 @@ start_server {tags {"scripting"}} {
         set e
     } {*wrong number*}
 
-    test {CLUSTER RESET can not be invoke from within a script} {
+    test {CLUSTER RESET cannot be invoke from within a script} {
         catch {
             run_script {
                   redis.call('cluster', 'reset', 'hard')
@@ -2230,7 +2230,7 @@ start_server {tags {"scripting"}} {
         ] 1
 
 
-        assert_error {*Can not execute the command on a stale replica*} {
+        assert_error {*Cannot execute the command on a stale replica*} {
             r eval {#!lua flags=allow-stale,no-writes
                 return redis.call('get','x')
             } 1 x

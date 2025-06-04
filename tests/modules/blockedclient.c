@@ -440,7 +440,7 @@ int wait_and_do_rm_call_async(ValkeyModuleCtx *ctx, ValkeyModuleString **argv, i
 
     int flags = ValkeyModule_GetContextFlags(ctx);
     if (flags & VALKEYMODULE_CTX_FLAGS_DENY_BLOCKING) {
-        return ValkeyModule_ReplyWithError(ctx, "Err can not run wait, blocking is not allowed.");
+        return ValkeyModule_ReplyWithError(ctx, "Err cannot run wait, blocking is not allowed.");
     }
 
     ValkeyModuleCallReply* rep = ValkeyModule_Call(ctx, "wait", "!EKcc", "1", "0");
@@ -502,7 +502,7 @@ int blpop_and_set_multiple_keys(ValkeyModuleCtx *ctx, ValkeyModuleString **argv,
 
     int flags = ValkeyModule_GetContextFlags(ctx);
     if (flags & VALKEYMODULE_CTX_FLAGS_DENY_BLOCKING) {
-        return ValkeyModule_ReplyWithError(ctx, "Err can not run wait, blocking is not allowed.");
+        return ValkeyModule_ReplyWithError(ctx, "Err cannot run wait, blocking is not allowed.");
     }
 
     ValkeyModuleCallReply* rep = ValkeyModule_Call(ctx, "blpop", "!EKsc", argv[1], "0");
