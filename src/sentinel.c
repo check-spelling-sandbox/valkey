@@ -1849,14 +1849,14 @@ const char *sentinelHandleConfiguration(char **argv, int argc) {
         /* notification-script <name> <path> */
         ri = sentinelGetPrimaryByName(argv[1]);
         if (!ri) return "No such master with specified name.";
-        if (access(argv[2], X_OK) == -1) return "Notification script seems non existing or non executable.";
+        if (access(argv[2], X_OK) == -1) return "Notification script seems nonexistent or non executable.";
         ri->notification_script = sdsnew(argv[2]);
     } else if (!strcasecmp(argv[0], "client-reconfig-script") && argc == 3) {
         /* client-reconfig-script <name> <path> */
         ri = sentinelGetPrimaryByName(argv[1]);
         if (!ri) return "No such master with specified name.";
         if (access(argv[2], X_OK) == -1)
-            return "Client reconfiguration script seems non existing or "
+            return "Client reconfiguration script seems nonexistent or "
                    "non executable.";
         ri->client_reconfig_script = sdsnew(argv[2]);
     } else if (!strcasecmp(argv[0], "auth-pass") && argc == 3) {
@@ -4199,7 +4199,7 @@ void sentinelSetCommand(client *c) {
             }
 
             if (sdslen(value) && access(value, X_OK) == -1) {
-                addReplyError(c, "Notification script seems non existing or non executable");
+                addReplyError(c, "Notification script seems nonexistent or non executable");
                 goto seterr;
             }
             sdsfree(ri->notification_script);
@@ -4216,7 +4216,7 @@ void sentinelSetCommand(client *c) {
             }
 
             if (sdslen(value) && access(value, X_OK) == -1) {
-                addReplyError(c, "Client reconfiguration script seems non existing or "
+                addReplyError(c, "Client reconfiguration script seems nonexistent or "
                                  "non executable");
                 goto seterr;
             }
