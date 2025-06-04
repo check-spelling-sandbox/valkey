@@ -1154,7 +1154,7 @@ size_t lpEstimateBytesRepeatedInteger(long long lval, unsigned long rep) {
  * Positive indexes specify the zero-based element to seek from the head to
  * the tail, negative indexes specify elements starting from the tail, where
  * -1 means the last element, -2 the penultimate and so forth. If the index
- * is out of range, NULL is returned. */
+ * is out-of-range, NULL is returned. */
 unsigned char *lpSeek(unsigned char *lp, long index) {
     int forward = 1; /* Seek forward by default. */
 
@@ -1165,7 +1165,7 @@ unsigned char *lpSeek(unsigned char *lp, long index) {
     uint32_t numele = lpGetNumElements(lp);
     if (numele != LP_HDR_NUMELE_UNKNOWN) {
         if (index < 0) index = (long)numele + index;
-        if (index < 0) return NULL;             /* Index still < 0 means out of range. */
+        if (index < 0) return NULL;             /* Index still < 0 means out-of-range. */
         if (index >= (long)numele) return NULL; /* Out of range the other side. */
         /* We want to scan right-to-left if the element we are looking for
          * is past the half of the listpack. */

@@ -1245,7 +1245,7 @@ void sentinelDisconnectCallback(const valkeyAsyncContext *c, int status) {
  * If the instance is a replica, the name parameter is ignored and is created
  * automatically as ip/hostname:port.
  *
- * The function fails if hostname can't be resolved or port is out of range.
+ * The function fails if hostname can't be resolved or port is out-of-range.
  * When this happens NULL is returned and errno is set accordingly to the
  * createSentinelAddr() function.
  *

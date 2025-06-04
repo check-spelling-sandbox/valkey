@@ -345,7 +345,7 @@ listNode *listSearchKey(list *list, void *key) {
  * where 0 is the head, 1 is the element next to head
  * and so on. Negative integers are used in order to count
  * from the tail, -1 is the last element, -2 the penultimate
- * and so on. If the index is out of range NULL is returned. */
+ * and so on. If the index is out-of-range NULL is returned. */
 listNode *listIndex(list *list, long index) {
     listNode *n;
 

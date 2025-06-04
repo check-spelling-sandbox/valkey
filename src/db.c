@@ -612,7 +612,7 @@ long long emptyDbStructure(serverDb *dbarray, int dbnum, int async, void(callbac
  *
  * On success the function returns the number of keys removed from the
  * database(s). Otherwise, -1 is returned in the specific case the
- * DB number is out of range, and errno is set to EINVAL. */
+ * DB number is out-of-range, and errno is set to EINVAL. */
 long long emptyData(int dbnum, int flags, void(callback)(hashtable *)) {
     int async = (flags & EMPTYDB_ASYNC);
     int with_functions = !(flags & EMPTYDB_NOFUNCTIONS);
@@ -861,7 +861,7 @@ void selectCommand(client *c) {
     if (getIntFromObjectOrReply(c, c->argv[1], &id, NULL) != C_OK) return;
 
     if (selectDb(c, id) == C_ERR) {
-        addReplyError(c, "DB index is out of range");
+        addReplyError(c, "DB index is out-of-range");
     } else {
         addReply(c, shared.ok);
     }
@@ -1432,7 +1432,7 @@ void moveCommand(client *c) {
     if (getIntFromObjectOrReply(c, c->argv[2], &dbid, NULL) != C_OK) return;
 
     if (selectDb(c, dbid) == C_ERR) {
-        addReplyError(c, "DB index is out of range");
+        addReplyError(c, "DB index is out-of-range");
         return;
     }
     dst = c->db;
@@ -1497,7 +1497,7 @@ void copyCommand(client *c) {
             if (getIntFromObjectOrReply(c, c->argv[j + 1], &dbid, NULL) != C_OK) return;
 
             if (selectDb(c, dbid) == C_ERR) {
-                addReplyError(c, "DB index is out of range");
+                addReplyError(c, "DB index is out-of-range");
                 return;
             }
             dst = c->db;
@@ -1622,7 +1622,7 @@ void scanDatabaseForDeletedKeys(serverDb *emptied, serverDb *replaced_with) {
  * swap the underlying referenced structures; otherwise, we would need
  * to fix all the references to the DB structure.
  *
- * Returns C_ERR if at least one of the DB ids are out of range; otherwise,
+ * Returns C_ERR if at least one of the DB ids are out-of-range; otherwise,
  * C_OK is returned. */
 int dbSwapDatabases(int id1, int id2) {
     if (id1 < 0 || id1 >= server.dbnum || id2 < 0 || id2 >= server.dbnum) return C_ERR;
@@ -1727,7 +1727,7 @@ void swapdbCommand(client *c) {
 
     /* Swap... */
     if (dbSwapDatabases(id1, id2) == C_ERR) {
-        addReplyError(c, "DB index is out of range");
+        addReplyError(c, "DB index is out-of-range");
         return;
     } else {
         ValkeyModuleSwapDbInfo si = {VALKEYMODULE_SWAPDBINFO_VERSION, id1, id2};

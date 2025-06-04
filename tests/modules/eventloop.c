@@ -130,12 +130,12 @@ int sanity(ValkeyModuleCtx *ctx, ValkeyModuleString **argv, int argc) {
     }
     if (ValkeyModule_EventLoopAdd(-1, VALKEYMODULE_EVENTLOOP_READABLE, onReadable, NULL)
         == VALKEYMODULE_OK || errno != ERANGE) {
-        ValkeyModule_ReplyWithError(ctx, "ERR out of range fd should fail");
+        ValkeyModule_ReplyWithError(ctx, "ERR out-of-range fd should fail");
         goto out;
     }
     if (ValkeyModule_EventLoopAdd(99999999, VALKEYMODULE_EVENTLOOP_READABLE, onReadable, NULL)
         == VALKEYMODULE_OK || errno != ERANGE) {
-        ValkeyModule_ReplyWithError(ctx, "ERR out of range fd should fail");
+        ValkeyModule_ReplyWithError(ctx, "ERR out-of-range fd should fail");
         goto out;
     }
     if (ValkeyModule_EventLoopAdd(fds[0], VALKEYMODULE_EVENTLOOP_READABLE, NULL, NULL)
@@ -160,12 +160,12 @@ int sanity(ValkeyModuleCtx *ctx, ValkeyModuleString **argv, int argc) {
     }
     if (ValkeyModule_EventLoopDel(-1, VALKEYMODULE_EVENTLOOP_READABLE)
         == VALKEYMODULE_OK || errno != ERANGE) {
-        ValkeyModule_ReplyWithError(ctx, "ERR out of range fd should fail");
+        ValkeyModule_ReplyWithError(ctx, "ERR out-of-range fd should fail");
         goto out;
     }
     if (ValkeyModule_EventLoopDel(99999999, VALKEYMODULE_EVENTLOOP_READABLE)
         == VALKEYMODULE_OK || errno != ERANGE) {
-        ValkeyModule_ReplyWithError(ctx, "ERR out of range fd should fail");
+        ValkeyModule_ReplyWithError(ctx, "ERR out-of-range fd should fail");
         goto out;
     }
     if (ValkeyModule_EventLoopAdd(fds[0], VALKEYMODULE_EVENTLOOP_READABLE, onReadable, NULL)

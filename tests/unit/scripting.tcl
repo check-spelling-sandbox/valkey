@@ -214,7 +214,7 @@ start_server {tags {"scripting"}} {
             local foo = redis.pcall('incr',KEYS[1])
             return {type(foo),foo['err']}
         } 1 mykey
-    } {table {ERR value is not an integer or out of range}}
+    } {table {ERR value is not an integer or out-of-range}}
 
     test {EVAL - Redis nil bulk reply -> Lua type conversion} {
         r del mykey
@@ -2316,7 +2316,7 @@ start_server {tags {"scripting"}} {
         r config set maxmemory 0
         r config resetstat
         # Script aborted due to error result of server command
-        assert_error {ERR DB index is out of range*} {
+        assert_error {ERR DB index is out-of-range*} {
             r eval {return redis.call('select',99)} 0
         }
         assert_equal [errorrstat ERR r] {count=1}
@@ -2329,7 +2329,7 @@ start_server {tags {"scripting"}} {
         assert_equal [
             r eval {
                 local t = redis.pcall('select',99)
-                if t['err'] == "ERR DB index is out of range" then
+                if t['err'] == "ERR DB index is out-of-range" then
                     return 1
                 else
                     return 0

@@ -369,7 +369,7 @@ zskiplistNode *zslNthInRange(zskiplist *zsl, zrangespec *range, long n) {
     zskiplistNode *last_highest_level_node = NULL;
     unsigned long rank_diff;
 
-    /* If everything is out of range, return early. */
+    /* If everything is out-of-range, return early. */
     if (!zslIsInRange(zsl, range)) return NULL;
 
     /* Go forward while *OUT* of range at level of zsl->level-1. */
@@ -735,7 +735,7 @@ zskiplistNode *zslNthInLexRange(zskiplist *zsl, zlexrangespec *range, long n) {
     zskiplistNode *last_highest_level_node = NULL;
     unsigned long rank_diff;
 
-    /* If everything is out of range, return early. */
+    /* If everything is out-of-range, return early. */
     if (!zslIsInLexRange(zsl, range)) return NULL;
 
     /* Go forward while *OUT* of range at level of zsl->level-1. */
@@ -939,7 +939,7 @@ unsigned char *zzlFirstInRange(unsigned char *zl, zrangespec *range) {
     unsigned char *eptr = lpSeek(zl, 0), *sptr;
     double score;
 
-    /* If everything is out of range, return early. */
+    /* If everything is out-of-range, return early. */
     if (!zzlIsInRange(zl, range)) return NULL;
 
     while (eptr != NULL) {
@@ -966,7 +966,7 @@ unsigned char *zzlLastInRange(unsigned char *zl, zrangespec *range) {
     unsigned char *eptr = lpSeek(zl, -2), *sptr;
     double score;
 
-    /* If everything is out of range, return early. */
+    /* If everything is out-of-range, return early. */
     if (!zzlIsInRange(zl, range)) return NULL;
 
     while (eptr != NULL) {
@@ -1031,7 +1031,7 @@ int zzlIsInLexRange(unsigned char *zl, zlexrangespec *range) {
 unsigned char *zzlFirstInLexRange(unsigned char *zl, zlexrangespec *range) {
     unsigned char *eptr = lpSeek(zl, 0), *sptr;
 
-    /* If everything is out of range, return early. */
+    /* If everything is out-of-range, return early. */
     if (!zzlIsInLexRange(zl, range)) return NULL;
 
     while (eptr != NULL) {
@@ -1055,7 +1055,7 @@ unsigned char *zzlFirstInLexRange(unsigned char *zl, zlexrangespec *range) {
 unsigned char *zzlLastInLexRange(unsigned char *zl, zlexrangespec *range) {
     unsigned char *eptr = lpSeek(zl, -2), *sptr;
 
-    /* If everything is out of range, return early. */
+    /* If everything is out-of-range, return early. */
     if (!zzlIsInLexRange(zl, range)) return NULL;
 
     while (eptr != NULL) {
@@ -4282,7 +4282,7 @@ void zrandmemberCommand(client *c) {
         } else if (c->argc == 4) {
             withscores = 1;
             if (l < -LONG_MAX / 2 || l > LONG_MAX / 2) {
-                addReplyError(c, "value is out of range");
+                addReplyError(c, "value is out-of-range");
                 return;
             }
         }

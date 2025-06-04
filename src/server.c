@@ -2049,7 +2049,7 @@ void createSharedObjects(void) {
     shared.nokeyerr = createObject(OBJ_STRING, sdsnew("-ERR no such key\r\n"));
     shared.syntaxerr = createObject(OBJ_STRING, sdsnew("-ERR syntax error\r\n"));
     shared.sameobjecterr = createObject(OBJ_STRING, sdsnew("-ERR source and destination objects are the same\r\n"));
-    shared.outofrangeerr = createObject(OBJ_STRING, sdsnew("-ERR index out of range\r\n"));
+    shared.outofrangeerr = createObject(OBJ_STRING, sdsnew("-ERR index out-of-range\r\n"));
     shared.noscripterr = createObject(OBJ_STRING, sdsnew("-NOSCRIPT No matching script.\r\n"));
     createSharedObjectsWithCompat();
     shared.primarydownerr = createObject(

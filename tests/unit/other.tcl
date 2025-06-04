@@ -94,10 +94,10 @@ start_server {tags {"other"}} {
         r get x
     } {10} {needs:debug needs:save}
 
-    test {SELECT an out of range DB} {
+    test {SELECT an out-of-range DB} {
         catch {r select 1000000} err
         set _ $err
-    } {*index is out of range*} {cluster:skip}
+    } {*index is out-of-range*} {cluster:skip}
 
     tags {consistency} {
         proc check_consistency {dumpname code} {

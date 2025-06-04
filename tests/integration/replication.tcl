@@ -1462,7 +1462,7 @@ start_server {tags {"repl" "external:skip"}} {
 
     test "PSYNC with wrong offset should throw error" {
         # It used to accept the FULL SYNC, but also replied with an error.
-        assert_error {ERR value is not an integer or out of range} {r psync replicationid offset_str}
+        assert_error {ERR value is not an integer or out-of-range} {r psync replicationid offset_str}
         set logs [exec tail -n 100 < [srv 0 stdout]]
         assert_match {*Replica * asks for synchronization but with a wrong offset} $logs
         assert_equal "PONG" [r ping]

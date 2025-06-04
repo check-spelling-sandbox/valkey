@@ -351,7 +351,7 @@ foreach command {SORT SORT_RO} {
         # expecting a different outcome on 32 and 64 bit systems
         foreach value {9223372036854775807 2147483647} {
             catch {[r sort_ro L by a limit 2 $value]} res
-            if {![string match "2" $res] && ![string match "*out of range*" $res]} {
+            if {![string match "2" $res] && ![string match "*out-of-range*" $res]} {
                 assert_not_equal $res "expecting an error or 2"
             }
         }

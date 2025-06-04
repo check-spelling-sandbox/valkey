@@ -276,7 +276,7 @@ int64_t intsetMin(intset *is) {
 }
 
 /* Get the value at the given position. When this position is
- * out of range the function returns 0, when in range it returns 1. */
+ * out-of-range the function returns 0, when in range it returns 1. */
 uint8_t intsetGet(intset *is, uint32_t pos, int64_t *value) {
     if (pos < intrev32ifbe(is->length)) {
         *value = _intsetGet(is, pos);

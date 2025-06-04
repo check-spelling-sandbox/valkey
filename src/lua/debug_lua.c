@@ -255,10 +255,10 @@ void ldbKillForkedSessions(void) {
     ldb.children = listCreate();
 }
 /* Return a pointer to ldb.src source code line, considering line to be
- * one-based, and returning a special string for out of range lines. */
+ * one-based, and returning a special string for out-of-range lines. */
 char *ldbGetSourceLine(int line) {
     int idx = line - 1;
-    if (idx < 0 || idx >= ldb.lines) return "<out of range source code line>";
+    if (idx < 0 || idx >= ldb.lines) return "<out-of-range source code line>";
     return ldb.src[idx];
 }
 

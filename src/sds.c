@@ -794,7 +794,7 @@ sds sdstrim(sds s, const char *cset) {
  * It does not release the free space in the string, so a call to
  * sdsRemoveFreeSpace may be wise after. */
 void sdssubstr(sds s, size_t start, size_t len) {
-    /* Clamp out of range input */
+    /* Clamp out-of-range input */
     size_t oldlen = sdslen(s);
     if (start >= oldlen) start = len = 0;
     if (len > oldlen - start) len = oldlen - start;

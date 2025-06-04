@@ -36,7 +36,7 @@
             "oneOf": [
                 {
                     "type": "null",
-                    "description": "Index is out of range"
+                    "description": "Index is out-of-range"
                 },
                 {
                     "description": "The requested element",

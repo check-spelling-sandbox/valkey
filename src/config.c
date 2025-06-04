@@ -609,7 +609,7 @@ void loadServerConfigFromString(sds config) {
         goto loaderr;
     }
 
-    /* To ensure backward compatibility and work while hz is out of range */
+    /* To ensure backward compatibility and work while hz is out-of-range */
     if (server.hz < CONFIG_MIN_HZ) server.hz = CONFIG_MIN_HZ;
     if (server.hz > CONFIG_MAX_HZ) server.hz = CONFIG_MAX_HZ;
 
@@ -2458,7 +2458,7 @@ static int updateProcTitleTemplate(const char **err) {
 
 static int updateHZ(const char **err) {
     UNUSED(err);
-    /* Hz is more a hint from the user, so we accept values out of range
+    /* Hz is more a hint from the user, so we accept values out-of-range
      * but cap them to reasonable values. */
     if (server.hz < CONFIG_MIN_HZ) server.hz = CONFIG_MIN_HZ;
     if (server.hz > CONFIG_MAX_HZ) server.hz = CONFIG_MAX_HZ;

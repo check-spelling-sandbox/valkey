@@ -1044,7 +1044,7 @@ int getLongLongFromObjectOrReply(client *c, robj *o, long long *target, const ch
         if (msg != NULL) {
             addReplyError(c, (char *)msg);
         } else {
-            addReplyError(c, "value is not an integer or out of range");
+            addReplyError(c, "value is not an integer or out-of-range");
         }
         return C_ERR;
     }
@@ -1060,7 +1060,7 @@ int getLongFromObjectOrReply(client *c, robj *o, long *target, const char *msg) 
         if (msg != NULL) {
             addReplyError(c, (char *)msg);
         } else {
-            addReplyError(c, "value is out of range");
+            addReplyError(c, "value is out-of-range");
         }
         return C_ERR;
     }
@@ -1074,7 +1074,7 @@ int getRangeLongFromObjectOrReply(client *c, robj *o, long min, long max, long *
         if (msg != NULL) {
             addReplyError(c, (char *)msg);
         } else {
-            addReplyErrorFormat(c, "value is out of range, value must between %ld and %ld", min, max);
+            addReplyErrorFormat(c, "value is out-of-range, value must between %ld and %ld", min, max);
         }
         return C_ERR;
     }
@@ -1085,7 +1085,7 @@ int getPositiveLongFromObjectOrReply(client *c, robj *o, long *target, const cha
     if (msg) {
         return getRangeLongFromObjectOrReply(c, o, 0, LONG_MAX, target, msg);
     } else {
-        return getRangeLongFromObjectOrReply(c, o, 0, LONG_MAX, target, "value is out of range, must be positive");
+        return getRangeLongFromObjectOrReply(c, o, 0, LONG_MAX, target, "value is out-of-range, must be positive");
     }
 }
 
