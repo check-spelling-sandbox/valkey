@@ -1410,7 +1410,7 @@ quicklist *quicklistDup(quicklist *orig) {
  * where 0 is the head, 1 is the element next to head
  * and so on. Negative integers are used in order to count
  * from the tail, -1 is the last element, -2 the penultimate
- * and so on. If the index is out of range 0 is returned.
+ * and so on. If the index is out-of-range 0 is returned.
  *
  * Returns an iterator at a specific offset 'idx' if element found
  * Returns NULL if element not found */

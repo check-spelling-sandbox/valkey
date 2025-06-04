@@ -390,13 +390,13 @@ start_server {tags {"zset"}} {
             assert_equal {c d} [r zrange ztmp -2 -1]
             assert_equal {c} [r zrange ztmp -2 -2]
 
-            # out of range start index
+            # out-of-range start index
             assert_equal {a b c} [r zrange ztmp -5 2]
             assert_equal {a b} [r zrange ztmp -5 1]
             assert_equal {} [r zrange ztmp 5 -1]
             assert_equal {} [r zrange ztmp 5 -2]
 
-            # out of range end index
+            # out-of-range end index
             assert_equal {a b c d} [r zrange ztmp 0 5]
             assert_equal {b c d} [r zrange ztmp 1 5]
             assert_equal {} [r zrange ztmp 0 -5]
@@ -420,13 +420,13 @@ start_server {tags {"zset"}} {
             assert_equal {b a} [r zrevrange ztmp -2 -1]
             assert_equal {b} [r zrevrange ztmp -2 -2]
 
-            # out of range start index
+            # out-of-range start index
             assert_equal {d c b} [r zrevrange ztmp -5 2]
             assert_equal {d c} [r zrevrange ztmp -5 1]
             assert_equal {} [r zrevrange ztmp 5 -1]
             assert_equal {} [r zrevrange ztmp 5 -2]
 
-            # out of range end index
+            # out-of-range end index
             assert_equal {d c b a} [r zrevrange ztmp 0 5]
             assert_equal {c b a} [r zrevrange ztmp 1 5]
             assert_equal {} [r zrevrange ztmp 0 -5]
@@ -2458,9 +2458,9 @@ start_server {tags {"zset"}} {
 
     test "ZRANDMEMBER count overflow" {
         r zadd myzset 0 a
-        assert_error {*value is out of range*} {r zrandmember myzset -9223372036854770000 withscores}
-        assert_error {*value is out of range*} {r zrandmember myzset -9223372036854775808 withscores}
-        assert_error {*value is out of range*} {r zrandmember myzset -9223372036854775808}
+        assert_error {*value is out-of-range*} {r zrandmember myzset -9223372036854770000 withscores}
+        assert_error {*value is out-of-range*} {r zrandmember myzset -9223372036854775808 withscores}
+        assert_error {*value is out-of-range*} {r zrandmember myzset -9223372036854775808}
     } {}
 
     # Make sure we can distinguish between an empty array and a null response

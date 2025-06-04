@@ -492,7 +492,7 @@ int test_listpackDeleteInclusiveRange1_2(int argc, char **argv, int flags) {
 }
 
 int test_listpackDeleteWitStartIndexOutOfRange(int argc, char **argv, int flags) {
-    /* Delete with start index out of range */
+    /* Delete with start index out-of-range */
     UNUSED(argc);
     UNUSED(argv);
     UNUSED(flags);

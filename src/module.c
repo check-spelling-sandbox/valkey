@@ -4077,7 +4077,7 @@ int VM_AvoidReplicaTraffic(void) {
 }
 
 /* Change the currently selected DB. Returns an error if the id
- * is out of range.
+ * is out-of-range.
  *
  * Note that the client will retain the currently selected DB even after
  * the command implemented by the module calling this function
@@ -5513,7 +5513,7 @@ int VM_StreamAdd(ValkeyModuleKey *key, int flags, ValkeyModuleStreamID *id, Valk
         errno = EBADF; /* key not open for writing */
         return VALKEYMODULE_ERR;
     } else if (!(flags & VALKEYMODULE_STREAM_ADD_AUTOID) && id->ms == 0 && id->seq == 0) {
-        errno = EDOM; /* ID out of range */
+        errno = EDOM; /* ID out-of-range */
         return VALKEYMODULE_ERR;
     }
 
@@ -5980,7 +5980,7 @@ size_t VM_CallReplyLength(ValkeyModuleCallReply *reply) {
 }
 
 /* Return the 'idx'-th nested call reply element of an array reply, or NULL
- * if the reply type is wrong or the index is out of range. */
+ * if the reply type is wrong or the index is out-of-range. */
 ValkeyModuleCallReply *VM_CallReplyArrayElement(ValkeyModuleCallReply *reply, size_t idx) {
     return callReplyGetArrayElement(reply, idx);
 }
@@ -6012,7 +6012,7 @@ int VM_CallReplyBool(ValkeyModuleCallReply *reply) {
 }
 
 /* Return the 'idx'-th nested call reply element of a set reply, or NULL
- * if the reply type is wrong or the index is out of range. */
+ * if the reply type is wrong or the index is out-of-range. */
 ValkeyModuleCallReply *VM_CallReplySetElement(ValkeyModuleCallReply *reply, size_t idx) {
     return callReplyGetSetElement(reply, idx);
 }
@@ -6021,7 +6021,7 @@ ValkeyModuleCallReply *VM_CallReplySetElement(ValkeyModuleCallReply *reply, size
  *
  * Returns:
  * - VALKEYMODULE_OK on success.
- * - VALKEYMODULE_ERR if idx out of range or if the reply type is wrong.
+ * - VALKEYMODULE_ERR if idx out-of-range or if the reply type is wrong.
  *
  * The `key` and `value` arguments are used to return by reference, and may be
  * NULL if not required. */
@@ -6044,7 +6044,7 @@ ValkeyModuleCallReply *VM_CallReplyAttribute(ValkeyModuleCallReply *reply) {
  *
  * Returns:
  * - VALKEYMODULE_OK on success.
- * - VALKEYMODULE_ERR if idx out of range or if the reply type is wrong.
+ * - VALKEYMODULE_ERR if idx out-of-range or if the reply type is wrong.
  *
  * The `key` and `value` arguments are used to return by reference, and may be
  * NULL if not required. */
@@ -7868,7 +7868,7 @@ ValkeyModuleBlockedClient *moduleBlockClient(ValkeyModuleCtx *ctx,
         mstime_t now = mstime();
         if (timeout_ms > LLONG_MAX - now) {
             c->bstate->module_blocked_handle = NULL;
-            addReplyError(c, "timeout is out of range"); /* 'timeout_ms+now' would overflow */
+            addReplyError(c, "timeout is out-of-range"); /* 'timeout_ms+now' would overflow */
             return bc;
         }
         timeout = timeout_ms + now;
@@ -10617,7 +10617,7 @@ const char *VM_ServerInfoGetFieldC(ValkeyModuleServerInfoData *data, const char 
 }
 
 /* Get the value of a field from data collected with VM_GetServerInfo(). If the
- * field is not found, or is not numerical or out of range, return value will be
+ * field is not found, or is not numerical or out-of-range, return value will be
  * 0, and the optional out_err argument will be set to VALKEYMODULE_ERR. */
 long long VM_ServerInfoGetFieldSigned(ValkeyModuleServerInfoData *data, const char *field, int *out_err) {
     long long ll;
@@ -10636,7 +10636,7 @@ long long VM_ServerInfoGetFieldSigned(ValkeyModuleServerInfoData *data, const ch
 }
 
 /* Get the value of a field from data collected with VM_GetServerInfo(). If the
- * field is not found, or is not numerical or out of range, return value will be
+ * field is not found, or is not numerical or out-of-range, return value will be
  * 0, and the optional out_err argument will be set to VALKEYMODULE_ERR. */
 unsigned long long VM_ServerInfoGetFieldUnsigned(ValkeyModuleServerInfoData *data, const char *field, int *out_err) {
     unsigned long long ll;

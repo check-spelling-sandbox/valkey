@@ -3750,7 +3750,7 @@ static int parseClientFiltersOrReply(client *c, int index, clientFilter *filter)
             long long maxage;
 
             if (getLongLongFromObjectOrReply(c, c->argv[index + 1], &maxage,
-                                             "maxage is not an integer or out of range") != C_OK)
+                                             "maxage is not an integer or out-of-range") != C_OK)
                 return C_ERR;
             if (maxage <= 0) {
                 addReplyError(c, "maxage should be greater than 0");
@@ -3793,7 +3793,7 @@ static int parseClientFiltersOrReply(client *c, int index, clientFilter *filter)
             long long idle_time;
 
             if (getLongLongFromObjectOrReply(c, c->argv[index + 1], &idle_time,
-                                             "idle is not an integer or out of range") != C_OK)
+                                             "idle is not an integer or out-of-range") != C_OK)
                 return C_ERR;
             if (idle_time <= 0) {
                 addReplyError(c, "idle should be greater than 0");
@@ -3823,7 +3823,7 @@ static int parseClientFiltersOrReply(client *c, int index, clientFilter *filter)
         } else if (!strcasecmp(c->argv[index]->ptr, "db") && moreargs) {
             int db_id;
             if (getIntFromObjectOrReply(c, c->argv[index + 1], &db_id,
-                                        "DB is not an integer or out of range") != C_OK)
+                                        "DB is not an integer or out-of-range") != C_OK)
                 return C_ERR;
             if (db_id < 0 || db_id >= server.dbnum) {
                 addReplyErrorFormat(c, "DB number should be between 0 and %d", server.dbnum - 1);
@@ -4662,7 +4662,7 @@ void helloCommand(client *c) {
 
     if (c->argc >= 2) {
         if (getLongLongFromObjectOrReply(c, c->argv[next_arg++], &ver,
-                                         "Protocol version is not an integer or out of range") != C_OK) {
+                                         "Protocol version is not an integer or out-of-range") != C_OK) {
             return;
         }
 

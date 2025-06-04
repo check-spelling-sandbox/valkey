@@ -192,7 +192,7 @@ start_server {tags {"acl external:skip"}} {
         assert_error {*NOPERM*key*} {$r2 set writestr bar get ex 100}
         assert_error {*NOPERM*key*} {$r2 set writestr bar get keepttl nx}
 
-        # this probably should be `ERR value is not an integer or out of range`
+        # this probably should be `ERR value is not an integer or out-of-range`
         assert_error {*NOPERM*key*} {$r2 set writestr bar ex get}
     }
 

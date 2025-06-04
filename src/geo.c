@@ -293,7 +293,7 @@ int geoGetPointsInRange(robj *zobj, double min, double max, GeoShape *shape, geo
             double distance = 0;
             score = zzlGetScore(sptr);
 
-            /* If we fell out of range, break. */
+            /* If we fell out-of-range, break. */
             if (!zslValueLteMax(score, &range)) break;
 
             vstr = lpGetValue(eptr, &vlen, &vlong);

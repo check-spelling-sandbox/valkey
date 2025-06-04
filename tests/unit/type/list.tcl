@@ -499,7 +499,7 @@ foreach {type large} [array get largevalue] {
         assert {[r LPOS mylist c RANK -1] == 7}
         assert {[r LPOS mylist c RANK -2] == 6}
         assert_error "*RANK can't be zero: use 1 to start from the first match, 2 from the second ... or use negative to start*" {r LPOS mylist c RANK 0}
-        assert_error "*value is out of range*" {r LPOS mylist c RANK -9223372036854775808}
+        assert_error "*value is out-of-range*" {r LPOS mylist c RANK -9223372036854775808}
     }
 
     test {LPOS COUNT option} {
@@ -1288,12 +1288,12 @@ foreach {pop} {BLPOP BLMPOP_LEFT} {
     } {foo{t} aguacate}
 }
 
-    test "BLPOP: timeout value out of range" {
+    test "BLPOP: timeout value out-of-range" {
         # Timeout is parsed as float and multiplied by 1000, added mstime()
         # and stored in long-long which might lead to out-of-range value.
         # (Even though given timeout is smaller than LLONG_MAX, the result
         # will be bigger)            
-        assert_error "ERR *is out of range*" {r BLPOP blist1 0x7FFFFFFFFFFFFF}
+        assert_error "ERR *is out-of-range*" {r BLPOP blist1 0x7FFFFFFFFFFFFF}
     }  
         
     foreach {pop} {BLPOP BRPOP BLMPOP_LEFT BLMPOP_RIGHT} {
@@ -1908,12 +1908,12 @@ foreach {type large} [array get largevalue] {
             assert_equal {} [r lrange mylist 6 2]
         }
 
-        test "LRANGE out of range indexes including the full list - $type" {
+        test "LRANGE out-of-range indexes including the full list - $type" {
             create_$type mylist "$large 1 2 3"
             assert_equal "$large 1 2 3" [r lrange mylist -1000 1000]
         }
 
-        test "LRANGE out of range negative end index - $type" {
+        test "LRANGE out-of-range negative end index - $type" {
             create_$type mylist "$large 1 2 3"
             assert_equal $large [r lrange mylist 0 -4]
             assert_equal {} [r lrange mylist 0 -5]
@@ -1954,7 +1954,7 @@ foreach {type large} [array get largevalue] {
             assert_equal "1 2 3 4 $large" [trim_list $type 0 10]
         }
 
-        test "LTRIM out of range negative end index - $type" {
+        test "LTRIM out-of-range negative end index - $type" {
             assert_equal {1} [trim_list $type 0 -5]
             assert_equal {} [trim_list $type 0 -6]
         }
@@ -1966,7 +1966,7 @@ foreach {type large} [array get largevalue] {
             assert_equal "99 foo $large 96 bar" [r lrange mylist 0 -1]
         }
 
-        test "LSET out of range index - $type" {
+        test "LSET out-of-range index - $type" {
             assert_error ERR*range* {r lset mylist 10 foo}
         }
     }
@@ -2081,7 +2081,7 @@ foreach {pop} {BLPOP BLMPOP_RIGHT} {
 
         # test with invalid client id
         catch {[r client unblock asd]} e
-        assert_equal $e "ERR value is not an integer or out of range"
+        assert_equal $e "ERR value is not an integer or out-of-range"
 
         # test with non blocked client
         set myid [r client id]

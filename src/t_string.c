@@ -533,7 +533,7 @@ void setrangeCommand(client *c) {
         return;
 
     if (offset < 0) {
-        addReplyError(c, "offset is out of range");
+        addReplyError(c, "offset is out-of-range");
         return;
     }
 

@@ -393,8 +393,8 @@ start_server {tags {"introspection"}} {
 
         assert_error "ERR syntax error*" {r client list skipme yes_or_no}
 
-        assert_error "ERR *not an integer or out of range*" {r client list maxage str}
-        assert_error "ERR *not an integer or out of range*" {r client list maxage 9999999999999999999}
+        assert_error "ERR *not an integer or out-of-range*" {r client list maxage str}
+        assert_error "ERR *not an integer or out-of-range*" {r client list maxage 9999999999999999999}
         assert_error "ERR *greater than 0*" {r client list maxage -1}
     }
 
@@ -497,8 +497,8 @@ start_server {tags {"introspection"}} {
 
         assert_error "ERR syntax error*" {r client kill skipme yes_or_no}
 
-        assert_error "ERR *not an integer or out of range*" {r client kill maxage str}
-        assert_error "ERR *not an integer or out of range*" {r client kill maxage 9999999999999999999}
+        assert_error "ERR *not an integer or out-of-range*" {r client kill maxage str}
+        assert_error "ERR *not an integer or out-of-range*" {r client kill maxage 9999999999999999999}
         assert_error "ERR *greater than 0*" {r client kill maxage -1}
     }
 

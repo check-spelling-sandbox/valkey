@@ -6284,7 +6284,7 @@ int getSlotOrReply(client *c, robj *o) {
     long long slot;
 
     if (getLongLongFromObject(o, &slot) != C_OK || slot < 0 || slot >= CLUSTER_SLOTS) {
-        addReplyError(c, "Invalid or out of range slot");
+        addReplyError(c, "Invalid or out-of-range slot");
         return -1;
     }
     return (int)slot;
@@ -7018,7 +7018,7 @@ int clusterCommandSpecial(client *c) {
             return 1;
         }
         if (port <= 0 || port > 65535) {
-            addReplyErrorFormat(c, "Port number is out of range");
+            addReplyErrorFormat(c, "Port number is out-of-range");
             return 1;
         }
 
@@ -7032,7 +7032,7 @@ int clusterCommandSpecial(client *c) {
         }
 
         if (cport <= 0 || cport > 65535) {
-            addReplyErrorFormat(c, "Cluster bus port number is out of range");
+            addReplyErrorFormat(c, "Cluster bus port number is out-of-range");
             return 1;
         }
 

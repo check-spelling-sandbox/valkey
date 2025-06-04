@@ -575,7 +575,7 @@ void printBits(unsigned char *p, unsigned long count) {
  * is multiplied by 'bits'. This is useful for the BITFIELD command. */
 int getBitOffsetFromArgument(client *c, robj *o, uint64_t *offset, int hash, int bits) {
     long long loffset;
-    char *err = "bit offset is not an integer or out of range";
+    char *err = "bit offset is not an integer or out-of-range";
     sds p = o->ptr;
     size_t plen = sdslen(p);
     int usehash = 0;
@@ -690,7 +690,7 @@ unsigned char *getObjectReadOnlyString(robj *o, long *len, char *llbuf) {
 /* SETBIT key offset bitvalue */
 void setbitCommand(client *c) {
     robj *o;
-    char *err = "bit is not an integer or out of range";
+    char *err = "bit is not an integer or out-of-range";
     uint64_t bitoffset;
     ssize_t byte, bit;
     int byteval, bitval;

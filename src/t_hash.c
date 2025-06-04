@@ -1323,7 +1323,7 @@ void hrandfieldCommand(client *c) {
         } else if (c->argc == 4) {
             withvalues = 1;
             if (l < -LONG_MAX / 2 || l > LONG_MAX / 2) {
-                addReplyError(c, "value is out of range");
+                addReplyError(c, "value is out-of-range");
                 return;
             }
         }
