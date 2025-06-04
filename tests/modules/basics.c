@@ -779,7 +779,7 @@ int TestAssertErrorReply(ValkeyModuleCtx *ctx, ValkeyModuleCallReply *reply, cha
         const char *mystr_ptr = ValkeyModule_StringPtrLen(mystr,NULL);
         const char *expected_ptr = ValkeyModule_StringPtrLen(expected,NULL);
         ValkeyModule_Log(ctx,"warning",
-            "Unexpected Error reply reply '%s' (instead of '%s')",
+            "Unexpected Error reply '%s' (instead of '%s')",
             mystr_ptr, expected_ptr);
         return 0;
     }
