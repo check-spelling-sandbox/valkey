@@ -405,7 +405,7 @@ start_server {overrides {save {900 1}} tags {"modules"}} {
             return 2
         } 1 x
 
-        assert_error {READONLY Can not run script with write flag on readonly replica*} {
+        assert_error {READONLY Cannot run script with write flag on readonly replica*} {
             r test.rm_call eval {#!lua
                 redis.call('get','x')
                 return 3
