@@ -569,10 +569,9 @@ void addReplySds(client *c, sds s) {
  * client buffer, trying the static buffer initially, and using the string
  * of objects if not possible.
  *
- * It is efficient because does not create an SDS object nor an Object
- * if not needed. The object will only be created by calling
- * _addReplyProtoToList() if we fail to extend the existing tail object
- * in the list of objects. */
+ * It is efficient because it does not needlessly create an SDS object/Object.
+ * The object will only be created by calling _addReplyProtoToList() if we
+ * fail to extend the existing tail object in the list of objects. */
 void addReplyProto(client *c, const char *s, size_t len) {
     if (prepareClientToWrite(c) != C_OK) return;
     _addReplyToBufferOrList(c, s, len);
