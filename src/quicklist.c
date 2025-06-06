@@ -458,7 +458,7 @@ void quicklistNodeLimit(int fill, size_t *size, unsigned int *count) {
 /* Check if the limit of the quicklist node has been reached to determine if
  * insertions, merges or other operations that would increase the size of
  * the node can be performed.
- * Return 1 if exceeds the limit, otherwise 0. */
+ * Return 1 if exceeds the limit; otherwise, 0. */
 int quicklistNodeExceedsLimit(int fill, size_t new_sz, unsigned int new_count) {
     size_t sz_limit;
     unsigned int count_limit;
@@ -951,7 +951,7 @@ static quicklistNode *_quicklistSplitNode(quicklistNode *node, int offset, int a
 
 /* Insert a new entry before or after existing entry 'entry'.
  *
- * If after==1, the new value is inserted after 'entry', otherwise
+ * If after==1, the new value is inserted after 'entry'; otherwise,
  * the new value is inserted before 'entry'. */
 static void _quicklistInsert(quicklistIter *iter, quicklistEntry *entry, void *value, const size_t sz, int after) {
     quicklist *quicklist = iter->quicklist;
@@ -1410,7 +1410,7 @@ quicklist *quicklistDup(quicklist *orig) {
  * where 0 is the head, 1 is the element next to head
  * and so on. Negative integers are used in order to count
  * from the tail, -1 is the last element, -2 the penultimate
- * and so on. If the index is out of range 0 is returned.
+ * and so on. If the index is out-of-range 0 is returned.
  *
  * Returns an iterator at a specific offset 'idx' if element found
  * Returns NULL if element not found */
@@ -1468,7 +1468,7 @@ void quicklistRotate(quicklist *quicklist) {
 
     /* If quicklist has only one node, the head listpack is also the
      * tail listpack and PushHead() could have reallocated our single listpack,
-     * which would make our pre-existing 'p' unusable. */
+     * which would make our preexisting 'p' unusable. */
     if (quicklist->len == 1) {
         p = lpSeek(quicklist->tail->entry, -1);
     }

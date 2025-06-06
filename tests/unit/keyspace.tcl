@@ -130,7 +130,7 @@ start_server {tags {"keyspace"}} {
         append res [r get mykey2{t}]
     } {foobar}
 
-    test {RENAME against non existing source key} {
+    test {RENAME against nonexistent source key} {
         catch {r rename nokey{t} foobar{t}} err
         format $err
     } {ERR*}
@@ -145,7 +145,7 @@ start_server {tags {"keyspace"}} {
         r renamenx mykey mykey
     } {0}
 
-    test {RENAME where source and dest key are the same (non existing)} {
+    test {RENAME where source and dest key are the same (nonexistent)} {
         r del mykey
         catch {r rename mykey mykey} err
         format $err
@@ -239,7 +239,7 @@ start_server {tags {"keyspace"}} {
         r set mykey{t} foobar
         catch {r copy mykey{t} mynewkey{t} DB notanumber} e
         set e
-    } {ERR value is not an integer or out of range}
+    } {ERR value is not an integer or out-of-range}
 
     test {COPY can copy key expire metadata as well} {
         r set mykey{t} foobar ex 100
@@ -424,7 +424,7 @@ foreach {type large} [array get largevalue] {
         r set mykey hello
         catch {r move mykey notanumber} e
         set e
-    } {ERR value is not an integer or out of range} {singledb:skip}
+    } {ERR value is not an integer or out-of-range} {singledb:skip}
 
     test {MOVE can move key expire metadata as well} {
         r select 10
@@ -499,7 +499,7 @@ foreach {type large} [array get largevalue] {
         r randomkey
     } {}
 
-    test {KEYS * two times with long key, Github issue #1208} {
+    test {KEYS * two times with long key, GitHub issue #1208} {
         r flushdb
         r set dlskeriewrioeuwqoirueioqwrueoqwrueqw test
         r keys *
@@ -523,7 +523,7 @@ foreach {type large} [array get largevalue] {
        r select 0
        assert_match 0 [r dbsize] ;#verify DB[0] has 0 keys
        r flushall
-       assert_error "ERR DB index is out of range*" {r swapdb 44 55}
+       assert_error "ERR DB index is out-of-range*" {r swapdb 44 55}
        assert_error "ERR invalid second DB index*" {r swapdb 44 a}
        assert_error "ERR invalid first DB index*" {r swapdb a 55}
        assert_error "ERR invalid first DB index*" {r swapdb a b}

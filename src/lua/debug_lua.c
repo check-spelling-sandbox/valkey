@@ -208,7 +208,7 @@ void ldbEndSession(client *c) {
         serverLog(LL_NOTICE, "%s synchronous debugging eval session ended", SERVER_TITLE);
     }
 
-    /* Otherwise let's restore client's state. */
+    /* Otherwise, let's restore client's state. */
     connNonBlock(ldb.conn);
     connSendTimeout(ldb.conn, 0);
 
@@ -255,10 +255,10 @@ void ldbKillForkedSessions(void) {
     ldb.children = listCreate();
 }
 /* Return a pointer to ldb.src source code line, considering line to be
- * one-based, and returning a special string for out of range lines. */
+ * one-based, and returning a special string for out-of-range lines. */
 char *ldbGetSourceLine(int line) {
     int idx = line - 1;
-    if (idx < 0 || idx >= ldb.lines) return "<out of range source code line>";
+    if (idx < 0 || idx >= ldb.lines) return "<out-of-range source code line>";
     return ldb.src[idx];
 }
 
@@ -379,7 +379,7 @@ void ldbLogSourceLine(int lnum) {
 }
 
 /* Implement the "list" command of the Lua debugger. If around is 0
- * the whole file is listed, otherwise only a small portion of the file
+ * the whole file is listed; otherwise, only a small portion of the file
  * around the specified line is shown. When a line number is specified
  * the amount of context (lines before/after) is specified via the
  * 'context' argument. */
@@ -397,7 +397,7 @@ void ldbList(int around, int context) {
  * The new SDS string with the represented value attached is returned.
  * Used in order to implement ldbLogStackValue().
  *
- * The element is not automatically removed from the stack, nor it is
+ * The element is neither automatically removed from the stack, nor
  * converted to a different type. */
 #define LDB_MAX_VALUES_DEPTH (LUA_MINSTACK / 2)
 static sds ldbCatStackValueRec(sds s, lua_State *lua, int idx, int level) {
@@ -477,7 +477,7 @@ sds ldbCatStackValue(sds s, lua_State *lua, int idx) {
 }
 
 /* Produce a debugger log entry representing the value of the Lua object
- * currently on the top of the stack. The element is not popped nor modified.
+ * currently on the top of the stack. The element is neither popped nor modified.
  * Check ldbCatStackValue() for the actual implementation. */
 void ldbLogStackValue(lua_State *lua, char *prefix) {
     sds s = sdsnew(prefix);
@@ -830,7 +830,7 @@ void ldbMaxlen(sds *argv, int argc) {
 }
 
 /* Read debugging commands from client.
- * Return C_OK if the debugging session is continuing, otherwise
+ * Return C_OK if the debugging session is continuing; otherwise,
  * C_ERR if the client closed the connection or is timing out. */
 int ldbRepl(lua_State *lua) {
     sds *argv;

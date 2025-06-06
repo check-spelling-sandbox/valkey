@@ -415,7 +415,7 @@ int MemUsage_RedisCommand(ValkeyModuleCtx *ctx, ValkeyModuleString **argv, int a
     }
 
     if (dbid < 0 || dbid >= MAX_DB) {
-        return ValkeyModule_ReplyWithError(ctx, "ERR dbid out of range");
+        return ValkeyModule_ReplyWithError(ctx, "ERR dbid out-of-range");
     }
 
 

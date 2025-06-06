@@ -429,10 +429,10 @@ start_cluster 3 3 {tags {external:skip cluster} overrides {cluster-allow-replica
         assert_equal $e "ERR timeout is negative"
 
         catch {R 0 CLUSTER SETSLOT 609 MIGRATING $R1_id TIMEOUT 99999999999999999999} e
-        assert_equal $e "ERR timeout is not an integer or out of range"
+        assert_equal $e "ERR timeout is not an integer or out-of-range"
 
         catch {R 0 CLUSTER SETSLOT 609 MIGRATING $R1_id TIMEOUT abc} e
-        assert_equal $e "ERR timeout is not an integer or out of range"
+        assert_equal $e "ERR timeout is not an integer or out-of-range"
 
         catch {R 0 CLUSTER SETSLOT 609 TIMEOUT 100 MIGRATING $R1_id} e
         assert_equal $e "ERR Invalid CLUSTER SETSLOT action or number of arguments. Try CLUSTER HELP"
@@ -446,7 +446,7 @@ start_cluster 3 3 {tags {external:skip cluster} overrides {cluster-allow-replica
         # Pause the replica to simulate a failure
         pause_process [srv -3 pid]
 
-        # Setslot with an explicit 1ms timeoout
+        # Setslot with an explicit 1ms timeout
         set start_time [clock milliseconds]
         catch {R 0 CLUSTER SETSLOT 609 MIGRATING $R1_id TIMEOUT 3000} e
         set end_time [clock milliseconds]
@@ -533,7 +533,7 @@ start_cluster 3 3 {tags {external:skip cluster} } {
         R $primary_id_src select 1
         R $primary_id_src exists "{3560}key2"
         set result [catch {R $primary_id_src exec} err]
-        assert_match "ERR DB index is out of range" $err
+        assert_match "ERR DB index is out-of-range" $err
 
         # Multi/Exec on target before migration should fail at EXEC
         R $primary_id_target ASKING
@@ -548,7 +548,7 @@ start_cluster 3 3 {tags {external:skip cluster} } {
         R $primary_id_src multi        
         R $primary_id_src select 100                
         set result [catch {R $primary_id_src exec} err]
-        assert_match "ERR DB index is out of range" $err
+        assert_match "ERR DB index is out-of-range" $err
 
         # Migrate keys        
         R $primary_id_src select 0

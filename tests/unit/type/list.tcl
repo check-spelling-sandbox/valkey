@@ -499,7 +499,7 @@ foreach {type large} [array get largevalue] {
         assert {[r LPOS mylist c RANK -1] == 7}
         assert {[r LPOS mylist c RANK -2] == 6}
         assert_error "*RANK can't be zero: use 1 to start from the first match, 2 from the second ... or use negative to start*" {r LPOS mylist c RANK 0}
-        assert_error "*value is out of range*" {r LPOS mylist c RANK -9223372036854775808}
+        assert_error "*value is out-of-range*" {r LPOS mylist c RANK -9223372036854775808}
     }
 
     test {LPOS COUNT option} {
@@ -514,7 +514,7 @@ foreach {type large} [array get largevalue] {
         assert {[r LPOS mylist c COUNT 2 RANK -1] == {7 6}}
     }
 
-    test {LPOS non existing key} {
+    test {LPOS nonexistent key} {
         assert {[r LPOS mylistxxx c COUNT 0 RANK 2] eq {}}
     }
 
@@ -608,14 +608,14 @@ foreach {type large} [array get largevalue] {
             assert_equal {*0} [r rpop listcount 0]
         }
 
-        test "LPOP/RPOP against non existing key in RESP$resp" {
+        test "LPOP/RPOP against nonexistent key in RESP$resp" {
             r del non_existing_key
 
             verify_resp_response $resp [r lpop non_existing_key] {$-1} {_}
             verify_resp_response $resp [r rpop non_existing_key] {$-1} {_}
         }
 
-        test "LPOP/RPOP with <count> against non existing key in RESP$resp" {
+        test "LPOP/RPOP with <count> against nonexistent key in RESP$resp" {
             r del non_existing_key
 
             verify_resp_response $resp [r lpop non_existing_key 0] {*-1} {_}
@@ -1288,12 +1288,12 @@ foreach {pop} {BLPOP BLMPOP_LEFT} {
     } {foo{t} aguacate}
 }
 
-    test "BLPOP: timeout value out of range" {
+    test "BLPOP: timeout value out-of-range" {
         # Timeout is parsed as float and multiplied by 1000, added mstime()
         # and stored in long-long which might lead to out-of-range value.
         # (Even though given timeout is smaller than LLONG_MAX, the result
         # will be bigger)            
-        assert_error "ERR *is out of range*" {r BLPOP blist1 0x7FFFFFFFFFFFFF}
+        assert_error "ERR *is out-of-range*" {r BLPOP blist1 0x7FFFFFFFFFFFFF}
     }  
         
     foreach {pop} {BLPOP BRPOP BLMPOP_LEFT BLMPOP_RIGHT} {
@@ -1492,7 +1492,7 @@ foreach {pop} {BLPOP BLMPOP_LEFT} {
         assert_error {WRONGTYPE Operation against a key holding the wrong kind of value*} {r linsert k1 after 0 0}
     }
 
-    test {LINSERT against non existing key} {
+    test {LINSERT against nonexistent key} {
         assert_equal 0 [r linsert not-a-key before 0 0]
     }
 
@@ -1552,7 +1552,7 @@ foreach type {listpack quicklist} {
         assert_error WRONGTYPE* {r llen mylist}
     }
 
-    test {LLEN against non existing key} {
+    test {LLEN against nonexistent key} {
         assert_equal 0 [r llen not-a-key]
     }
 
@@ -1560,7 +1560,7 @@ foreach type {listpack quicklist} {
         assert_error WRONGTYPE* {r lindex mylist 0}
     }
 
-    test {LINDEX against non existing key} {
+    test {LINDEX against nonexistent key} {
         assert_equal "" [r lindex not-a-key 10]
     }
 
@@ -1682,7 +1682,7 @@ foreach type {listpack quicklist} {
         }
     }
 
-    test {RPOPLPUSH against non existing key} {
+    test {RPOPLPUSH against nonexistent key} {
         r del srclist{t} dstlist{t}
         assert_equal {} [r rpoplpush srclist{t} dstlist{t}]
         assert_equal 0 [r exists srclist{t}]
@@ -1707,7 +1707,7 @@ foreach {type large} [array get largevalue] {
     }
 }
 
-    test {RPOPLPUSH against non existing src key} {
+    test {RPOPLPUSH against nonexistent src key} {
         r del srclist{t} dstlist{t}
         assert_equal {} [r rpoplpush srclist{t} dstlist{t}]
     } {}
@@ -1908,19 +1908,19 @@ foreach {type large} [array get largevalue] {
             assert_equal {} [r lrange mylist 6 2]
         }
 
-        test "LRANGE out of range indexes including the full list - $type" {
+        test "LRANGE out-of-range indexes including the full list - $type" {
             create_$type mylist "$large 1 2 3"
             assert_equal "$large 1 2 3" [r lrange mylist -1000 1000]
         }
 
-        test "LRANGE out of range negative end index - $type" {
+        test "LRANGE out-of-range negative end index - $type" {
             create_$type mylist "$large 1 2 3"
             assert_equal $large [r lrange mylist 0 -4]
             assert_equal {} [r lrange mylist 0 -5]
         }
     }
 
-    test {LRANGE against non existing key} {
+    test {LRANGE against nonexistent key} {
         assert_equal {} [r lrange nosuchkey 0 1]
     }
 
@@ -1954,7 +1954,7 @@ foreach {type large} [array get largevalue] {
             assert_equal "1 2 3 4 $large" [trim_list $type 0 10]
         }
 
-        test "LTRIM out of range negative end index - $type" {
+        test "LTRIM out-of-range negative end index - $type" {
             assert_equal {1} [trim_list $type 0 -5]
             assert_equal {} [trim_list $type 0 -6]
         }
@@ -1966,12 +1966,12 @@ foreach {type large} [array get largevalue] {
             assert_equal "99 foo $large 96 bar" [r lrange mylist 0 -1]
         }
 
-        test "LSET out of range index - $type" {
+        test "LSET out-of-range index - $type" {
             assert_error ERR*range* {r lset mylist 10 foo}
         }
     }
 
-    test {LSET against non existing key} {
+    test {LSET against nonexistent key} {
         assert_error ERR*key* {r lset nosuchkey 10 foo}
     }
 
@@ -1992,7 +1992,7 @@ foreach {type large} [array get largevalue] {
             assert_equal "$e foobar foobared zap test foo" [r lrange mylist 0 -1]
         }
 
-        test "LREM remove non existing element - $type" {
+        test "LREM remove nonexistent element - $type" {
             assert_equal 0 [r lrem mylist 1 nosuchelement]
             assert_equal "$e foobar foobared zap test foo" [r lrange mylist 0 -1]
         }
@@ -2081,7 +2081,7 @@ foreach {pop} {BLPOP BLMPOP_RIGHT} {
 
         # test with invalid client id
         catch {[r client unblock asd]} e
-        assert_equal $e "ERR value is not an integer or out of range"
+        assert_equal $e "ERR value is not an integer or out-of-range"
 
         # test with non blocked client
         set myid [r client id]

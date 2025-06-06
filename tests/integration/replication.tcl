@@ -444,7 +444,7 @@ start_server {tags {"repl external:skip"} overrides {save {}}} {
             # to the slave.
             after 5000
 
-            # Stop the ability of the slave to process data by sendig
+            # Stop the ability of the slave to process data by sending
             # a script that will put it in BUSY state.
             $slave eval {for i=1,3000000000 do end} 0
 
@@ -968,7 +968,7 @@ start_server {tags {"repl external:skip"} overrides {save ""}} {
                         wait_for_log_messages -2 {"*Diskless rdb transfer, done reading from pipe, 1 replicas still up*"} $loglines 1 1
                     }
                     if {$all_drop == "timeout"} {
-                        wait_for_log_messages -2 {"*Disconnecting timedout replica (full sync)*"} $loglines 1 1
+                        wait_for_log_messages -2 {"*Disconnecting timed out replica (full sync)*"} $loglines 1 1
                         wait_for_log_messages -2 {"*Diskless rdb transfer, done reading from pipe, 1 replicas still up*"} $loglines 1 1
                         # master disconnected the slow replica, remove from array
                         set replicas_alive [lreplace $replicas_alive 0 0]
@@ -1376,7 +1376,7 @@ test {replica can handle EINTR if use diskless load} {
             set res [wait_for_log_messages -1 {"*Loading DB in memory*"} 0 200 10]
             set loglines [lindex $res 1]
 
-            # Wait till we see the watchgod log line AFTER the loading started
+            # Wait till we see the watchdog log line AFTER the loading started
             wait_for_log_messages -1 {"*WATCHDOG TIMER EXPIRED*"} $loglines 200 10
 
             # Make sure we're still loading, and that there was just one full sync attempt
@@ -1462,7 +1462,7 @@ start_server {tags {"repl" "external:skip"}} {
 
     test "PSYNC with wrong offset should throw error" {
         # It used to accept the FULL SYNC, but also replied with an error.
-        assert_error {ERR value is not an integer or out of range} {r psync replicationid offset_str}
+        assert_error {ERR value is not an integer or out-of-range} {r psync replicationid offset_str}
         set logs [exec tail -n 100 < [srv 0 stdout]]
         assert_match {*Replica * asks for synchronization but with a wrong offset} $logs
         assert_equal "PONG" [r ping]

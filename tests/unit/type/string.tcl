@@ -147,7 +147,7 @@ start_server {tags {"string"}} {
 
     test "GETEX syntax errors" {
         set ex {}
-        catch {r getex foo non-existent-option} ex
+        catch {r getex foo nonexistent-option} ex
         set ex
     } {*syntax*}
 
@@ -204,7 +204,7 @@ start_server {tags {"string"}} {
         r mget foo{t} bar{t}
     } {BAR FOO}
 
-    test {MGET against non existing key} {
+    test {MGET against nonexistent key} {
         r mget foo{t} baazz{t} bar{t}
     } {BAR {} FOO}
 
@@ -303,18 +303,18 @@ start_server {tags {"string"}} {
         assert_error "WRONGTYPE*" {r setbit mykey 0 1}
     }
 
-    test "SETBIT with out of range bit offset" {
+    test "SETBIT with out-of-range bit offset" {
         r del mykey
-        assert_error "*out of range*" {r setbit mykey [expr 4*1024*1024*1024] 1}
-        assert_error "*out of range*" {r setbit mykey -1 1}
+        assert_error "*out-of-range*" {r setbit mykey [expr 4*1024*1024*1024] 1}
+        assert_error "*out-of-range*" {r setbit mykey -1 1}
     }
 
     test "SETBIT with non-bit argument" {
         r del mykey
-        assert_error "*out of range*" {r setbit mykey 0 -1}
-        assert_error "*out of range*" {r setbit mykey 0  2}
-        assert_error "*out of range*" {r setbit mykey 0 10}
-        assert_error "*out of range*" {r setbit mykey 0 20}
+        assert_error "*out-of-range*" {r setbit mykey 0 -1}
+        assert_error "*out-of-range*" {r setbit mykey 0  2}
+        assert_error "*out-of-range*" {r setbit mykey 0 10}
+        assert_error "*out-of-range*" {r setbit mykey 0 20}
     }
 
     test "SETBIT fuzzing" {
@@ -437,12 +437,12 @@ start_server {tags {"string"}} {
         assert_error "WRONGTYPE*" {r setrange mykey 0 bar}
     }
 
-    test "SETRANGE with out of range offset" {
+    test "SETRANGE with out-of-range offset" {
         r del mykey
         assert_error "*maximum allowed size*" {r setrange mykey [expr 512*1024*1024-4] world}
 
         r set mykey "hello"
-        assert_error "*out of range*" {r setrange mykey -1 world}
+        assert_error "*out-of-range*" {r setrange mykey -1 world}
         assert_error "*maximum allowed size*" {r setrange mykey [expr 512*1024*1024-4] world}
     }
 
@@ -698,7 +698,7 @@ if {[string match {*jemalloc*} [s mem_allocator]]} {
         assert {$ttl <= 10 && $ttl > 5}
     }
 
-    test {GETRANGE with huge ranges, Github issue #1844} {
+    test {GETRANGE with huge ranges, GitHub issue #1844} {
         r set foo bar
         r getrange foo 0 4294967297
     } {bar}
@@ -735,7 +735,7 @@ if {[string match {*jemalloc*} [s mem_allocator]]} {
         foreach value {9223372036854775807 2147483647} {
             catch {[r setrange K $value A]} res
             # expecting a different error on 32 and 64 bit systems
-            if {![string match "*string exceeds maximum allowed size*" $res] && ![string match "*out of range*" $res]} {
+            if {![string match "*string exceeds maximum allowed size*" $res] && ![string match "*out-of-range*" $res]} {
                 assert_equal $res "expecting an error"
            }
         }

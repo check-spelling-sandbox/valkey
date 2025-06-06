@@ -129,7 +129,7 @@ static int nodeExceedsHandshakeTimeout(clusterNode *node, mstime_t now);
 void clusterCommandFlushslot(client *c);
 
 /* Only primaries that own slots have voting rights.
- * Returns 1 if the node has voting rights, otherwise returns 0. */
+ * Returns 1 if the node has voting rights; otherwise, returns 0. */
 static inline int clusterNodeIsVotingPrimary(clusterNode *n) {
     return (n->flags & CLUSTER_NODE_PRIMARY) && n->numslots;
 }
@@ -827,7 +827,7 @@ fmterr:
  * of the POSIX filesystem semantics, so that if the server is stopped
  * or crashes during the write, we'll end with either the old file or the
  * new one. Since we have the full payload to write available we can use
- * a single write to write the whole file. If the pre-existing file was
+ * a single write to write the whole file. If the preexisting file was
  * bigger we pad our payload with newlines that are anyway ignored and truncate
  * the file afterward. */
 int clusterSaveConfig(int do_fsync) {
@@ -934,7 +934,7 @@ void clusterSaveConfigOrDie(int do_fsync) {
  * in-place, reopening the file, and writing to it in place (later adjusting
  * the length with ftruncate()).
  *
- * On success C_OK is returned, otherwise an error is logged and
+ * On success C_OK is returned; otherwise, an error is logged and
  * the function returns C_ERR to signal a lock was not acquired. */
 int clusterLockConfig(char *filename) {
 /* flock() does not exist on Solaris
@@ -943,7 +943,7 @@ int clusterLockConfig(char *filename) {
  */
 #if !defined(__sun)
     /* To lock it, we need to open the file in a way it is created if
-     * it does not exist, otherwise there is a race condition with other
+     * it does not exist; otherwise, there is a race condition with other
      * processes. */
     int fd = open(filename, O_WRONLY | O_CREAT | O_CLOEXEC, 0644);
     if (fd == -1) {
@@ -1213,8 +1213,8 @@ void clusterInit(void) {
     if (!server.cluster_port && port > (65535 - CLUSTER_PORT_INCR)) {
         serverLog(LL_WARNING,
                   "%s port number too high. "
-                  "Cluster communication port is 10,000 port "
-                  "numbers higher than your %s port. "
+                  "Cluster communication port is 10,000 ports "
+                  "above your %s port. "
                   "Your %s port number must be 55535 or less.",
                   SERVER_TITLE, SERVER_TITLE, SERVER_TITLE);
         exit(1);
@@ -1683,7 +1683,7 @@ int clusterNodeAddFailureReport(clusterNode *failing, clusterNode *sender) {
         }
     }
 
-    /* Otherwise create a new report. */
+    /* Otherwise, create a new report. */
     fr = zmalloc(sizeof(*fr));
     fr->node = sender;
     fr->time = now;
@@ -1730,7 +1730,7 @@ void clusterNodeCleanupFailureReports(clusterNode *node) {
  * time.
  *
  * The function returns 1 if the failure report was found and removed.
- * Otherwise 0 is returned. */
+ * Otherwise, 0 is returned. */
 int clusterNodeDelFailureReport(clusterNode *node, clusterNode *sender) {
     list *l = node->fail_reports;
     if (!listLength(l)) return 0;
@@ -1998,7 +1998,7 @@ uint64_t clusterGetMaxEpoch(void) {
  * However the cluster uses this auto-generated new config epochs in two
  * cases:
  *
- * 1) When slots are closed after importing. Otherwise resharding would be
+ * 1) When slots are closed after importing. Otherwise, resharding would be
  *    too expensive.
  * 2) When CLUSTER FAILOVER is called with options that force a replica to
  *    failover its primary even if there is not primary majority able to
@@ -2483,7 +2483,7 @@ void clusterProcessGossipSection(clusterMsg *hdr, clusterLink *link) {
              * otherwise we risk joining another cluster.
              *
              * Note that we require that the sender of this gossip message
-             * is a well known node in our cluster, otherwise we risk
+             * is a well known node in our cluster; otherwise, we risk
              * joining another cluster. */
             if (sender && !(flags & CLUSTER_NODE_NOADDR) && !clusterBlacklistExists(g->nodename, CLUSTER_NAMELEN)) {
                 clusterNode *node;
@@ -2767,7 +2767,7 @@ void clusterUpdateSlotsConfigWith(clusterNode *sender, uint64_t senderConfigEpoc
                     /* A primary reason why we are here is likely due to my primary crashing during the
                      * slot finalization process, leading me to become the new primary without
                      * inheriting the slot ownership, while the source shard continued and relinquished
-                     * theslot to its old primary. Under such circumstances, the node would undergo
+                     * the slot to its old primary. Under such circumstances, the node would undergo
                      * an election and have its config epoch increased with consensus. That said, we
                      * will still explicitly bump the config epoch here to be consistent with the
                      * existing practice.
@@ -3265,7 +3265,7 @@ int clusterIsValidPacket(clusterLink *link) {
  * packet, modifying the cluster state if needed.
  *
  * The function returns 1 if the link is still valid after the packet
- * was processed, otherwise 0 if the link was freed since the packet
+ * was processed; otherwise, 0 if the link was freed since the packet
  * processing lead to some inconsistency error (for instance a PONG
  * received from the wrong sender ID). */
 int clusterProcessPacket(clusterLink *link) {
@@ -3918,7 +3918,7 @@ void clusterLinkConnectHandler(connection *conn) {
     clusterSendPing(link, nodeInMeetState(node) ? CLUSTERMSG_TYPE_MEET : CLUSTERMSG_TYPE_PING);
     if (old_ping_sent) {
         /* If there was an active ping before the link was
-         * disconnected, we want to restore the ping time, otherwise
+         * disconnected, we want to restore the ping time; otherwise,
          * replaced by the clusterSendPing() call. */
         node->ping_sent = old_ping_sent;
     }
@@ -4111,7 +4111,7 @@ static void clusterBuildMessageHdr(clusterMsg *hdr, int type, size_t msglen) {
     memcpy(hdr->sender, myself->name, CLUSTER_NAMELEN);
 
     /* If cluster-announce-ip option is enabled, force the receivers of our
-     * packets to use the specified address for this node. Otherwise if the
+     * packets to use the specified address for this node. Otherwise, if the
      * first byte is zero, they'll do auto discovery. */
     memset(hdr->myip, 0, NET_IP_STR_LEN);
     if (server.cluster_announce_ip) {
@@ -4515,7 +4515,7 @@ void clusterSendModule(clusterLink *link, uint64_t module_id, uint8_t type, cons
  * addresses are represented in the modules side, resolves the node, and sends
  * the message. If the target is NULL the message is broadcasted.
  *
- * The function returns C_OK if the target is valid, otherwise C_ERR is
+ * The function returns C_OK if the target is valid; otherwise, C_ERR is
  * returned. */
 int clusterSendModuleMessageToTarget(const char *target,
                                      uint64_t module_id,
@@ -4945,7 +4945,7 @@ void clusterHandleReplicaFailover(void) {
     }
 
     /* If the previous failover attempt timeout and the retry time has
-     * elapsed, we can setup a new one. */
+     * elapsed, we can set up a new one. */
     if (auth_age > auth_retry_time) {
         server.cluster->failover_auth_time = now +
                                              500 +           /* Fixed delay of 500 milliseconds, let FAIL msg propagate. */
@@ -5205,7 +5205,7 @@ void manualFailoverCanStart(void) {
          * manual failover again when the previous manual failover timed out.
          * Otherwise, if the previous election timed out (see auth_timeout) and
          * before the next retry (see auth_retry_time), the new manual failover
-         * will pause the primary and replica can not do anything to advance the
+         * will pause the primary and replica cannot do anything to advance the
          * manual failover, and then the manual failover eventually times out. */
         server.cluster->failover_auth_time = 0;
         serverLog(LL_WARNING,
@@ -5381,7 +5381,7 @@ void clusterCron(void) {
     di = dictGetSafeIterator(server.cluster->nodes);
     while ((de = dictNext(di)) != NULL) {
         clusterNode *node = dictGetVal(de);
-        /* We free the inbound or outboud link to the node if the link has an
+        /* We free the inbound or outbound link to the node if the link has an
          * oversized message send queue and immediately try reconnecting. */
         clusterNodeCronFreeLinkOnBufferLimitReached(node);
         /* The protocol is that function(s) below return non-zero if the node was
@@ -5613,7 +5613,7 @@ void bitmapClearBit(unsigned char *bitmap, int pos) {
 }
 
 /* Return non-zero if there is at least one primary with replicas in the cluster.
- * Otherwise zero is returned. Used by clusterNodeSetSlotBit() to set the
+ * Otherwise, zero is returned. Used by clusterNodeSetSlotBit() to set the
  * MIGRATE_TO flag the when a primary gets the first slot. */
 int clusterPrimariesHaveReplicas(void) {
     dictIterator di;
@@ -5679,7 +5679,7 @@ int clusterAddSlot(clusterNode *n, int slot) {
 }
 
 /* Delete the specified slot marking it as unassigned.
- * Returns C_OK if the slot was assigned, otherwise if the slot was
+ * Returns C_OK if the slot was assigned; otherwise, if the slot was
  * already unassigned C_ERR is returned. */
 int clusterDelSlot(int slot) {
     clusterNode *n = server.cluster->slots[slot];
@@ -5882,7 +5882,7 @@ int verifyClusterConfigWithData(void) {
     if (nodeIsReplica(myself)) return C_OK;
 
     /* Check that all the slots we see populated memory have a corresponding
-     * entry in the cluster table. Otherwise fix the table. */
+     * entry in the cluster table. Otherwise, fix the table. */
     for (j = 0; j < CLUSTER_SLOTS; j++) {
         if (!countKeysInSlot(j)) continue; /* No keys in this slot. */
         /* Check if we are assigned to this slot or if we are importing it.
@@ -6069,7 +6069,7 @@ sds clusterGenNodeDescription(client *c, clusterNode *node, int tls_primary) {
                    (node->link || node->flags & CLUSTER_NODE_MYSELF) ? "connected" : "disconnected");
 
     /* Slots served by this instance. If we already have slots info,
-     * append it directly, otherwise, generate slots only if it has. */
+     * append it directly; otherwise, generate slots only if it has. */
     if (node->slot_info_pairs) {
         ci = representSlotInfo(ci, node->slot_info_pairs, node->slot_info_pairs_count);
     } else if (node->numslots > 0) {
@@ -6284,7 +6284,7 @@ int getSlotOrReply(client *c, robj *o) {
     long long slot;
 
     if (getLongLongFromObject(o, &slot) != C_OK || slot < 0 || slot >= CLUSTER_SLOTS) {
-        addReplyError(c, "Invalid or out of range slot");
+        addReplyError(c, "Invalid or out-of-range slot");
         return -1;
     }
     return (int)slot;
@@ -7018,7 +7018,7 @@ int clusterCommandSpecial(client *c) {
             return 1;
         }
         if (port <= 0 || port > 65535) {
-            addReplyErrorFormat(c, "Port number is out of range");
+            addReplyErrorFormat(c, "Port number is out-of-range");
             return 1;
         }
 
@@ -7032,7 +7032,7 @@ int clusterCommandSpecial(client *c) {
         }
 
         if (cport <= 0 || cport > 65535) {
-            addReplyErrorFormat(c, "Cluster bus port number is out of range");
+            addReplyErrorFormat(c, "Cluster bus port number is out-of-range");
             return 1;
         }
 

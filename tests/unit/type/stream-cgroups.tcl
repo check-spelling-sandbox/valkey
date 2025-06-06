@@ -47,7 +47,7 @@ start_server {
         r XADD mystream * a 1
         r XADD mystream * b 2
         # XREADGROUP should return only the new elements "a 1" "b 1"
-        # and not the element "foo bar" which was pre existing in the
+        # and not the element "foo bar" which was preexisting in the
         # stream (see previous test)
         set reply [
             r XREADGROUP GROUP mygroup consumer-1 STREAMS mystream ">"
@@ -857,7 +857,7 @@ start_server {
         assert_equal [r XPENDING x grp - + 10 Alice] {}
     }
 
-    test {XAUTOCLAIM with out of range count} {
+    test {XAUTOCLAIM with out-of-range count} {
         assert_error {ERR COUNT*} {r XAUTOCLAIM x grp Bob 0 3-0 COUNT 8070450532247928833}
     }
 

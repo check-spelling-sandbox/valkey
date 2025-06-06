@@ -56,13 +56,13 @@ start_server {tags {"bitops"}} {
         assert_error "*WRONGTYPE*" {r bitcount mylist -6 -15 bit}
     }
 
-    test {BITCOUNT returns 0 against non existing key} {
+    test {BITCOUNT returns 0 against nonexistent key} {
         r del no-key
         assert {[r bitcount no-key] == 0}
         assert {[r bitcount no-key 0 1000 bit] == 0}
     }
 
-    test {BITCOUNT returns 0 with out of range indexes} {
+    test {BITCOUNT returns 0 with out-of-range indexes} {
         r set str "xxxx"
         assert {[r bitcount str 4 10] == 0}
         assert {[r bitcount str 32 87 bit] == 0}
@@ -73,7 +73,7 @@ start_server {tags {"bitops"}} {
         assert {[r bitcount str -6 -7] == 0}
         assert {[r bitcount str -6 -15 bit] == 0}
 
-        # against non existing key
+        # against nonexistent key
         r del str
         assert {[r bitcount str -6 -7] == 0}
         assert {[r bitcount str -6 -15 bit] == 0}
@@ -178,7 +178,7 @@ start_server {tags {"bitops"}} {
         r set s 1
         assert_error {ERR *not an integer*} {r bitcount s a b}
 
-        # against non existing key
+        # against nonexistent key
         r del s
         assert_error {ERR *not an integer*} {r bitcount s a b}
 
@@ -191,7 +191,7 @@ start_server {tags {"bitops"}} {
         r del foo
         r setbit foo 0 1
         if {[catch {r bitcount foo 0 4294967296} e]} {
-            assert_match {*ERR*out of range*} $e
+            assert_match {*ERR*out-of-range*} $e
             set _ 1
         } else {
             set e
@@ -328,7 +328,7 @@ start_server {tags {"bitops"}} {
         assert_error {ERR *not an integer*} {r bitpos s a}
         assert_error {ERR *not an integer*} {r bitpos s 0 a b}
 
-        # against non existing key
+        # against nonexistent key
         r del s
         assert_error {ERR *not an integer*} {r bitpos s b}
         assert_error {ERR *not an integer*} {r bitpos s 0 a b}

@@ -40,7 +40,7 @@
  * by the user before to call listRelease(), or by setting a free method using
  * listSetFreeMethod.
  *
- * On error, NULL is returned. Otherwise the pointer to the new list. */
+ * On error, NULL is returned. Otherwise, the pointer to the new list. */
 list *listCreate(void) {
     struct list *list;
 
@@ -275,7 +275,7 @@ listNode *listNext(listIter *iter) {
  * On success a copy of the original list is returned.
  *
  * The 'Dup' method set with listSetDupMethod() function is used
- * to copy the node value. Otherwise the same pointer value of
+ * to copy the node value. Otherwise, the same pointer value of
  * the original node is used as value of the copied node.
  *
  * The original list both on success or error is never modified. */
@@ -345,7 +345,7 @@ listNode *listSearchKey(list *list, void *key) {
  * where 0 is the head, 1 is the element next to head
  * and so on. Negative integers are used in order to count
  * from the tail, -1 is the last element, -2 the penultimate
- * and so on. If the index is out of range NULL is returned. */
+ * and so on. If the index is out-of-range NULL is returned. */
 listNode *listIndex(list *list, long index) {
     listNode *n;
 

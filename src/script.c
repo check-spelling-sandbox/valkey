@@ -45,24 +45,24 @@ scriptFlag scripts_flags_def[] = {
 /* On script invocation, holding the current run context */
 static scriptRunCtx *curr_run_ctx = NULL;
 
-static void exitScriptTimedoutMode(scriptRunCtx *run_ctx) {
+static void exitScriptTimedOutMode(scriptRunCtx *run_ctx) {
     serverAssert(run_ctx == curr_run_ctx);
-    serverAssert(scriptIsTimedout());
+    serverAssert(scriptIsTimedOut());
     run_ctx->flags &= ~SCRIPT_TIMEDOUT;
     blockingOperationEnds();
     /* if we are a replica and we have an active primary, set it for continue processing */
     if (server.primary_host && server.primary) queueClientForReprocessing(server.primary);
 }
 
-static void enterScriptTimedoutMode(scriptRunCtx *run_ctx) {
+static void enterScriptTimedOutMode(scriptRunCtx *run_ctx) {
     serverAssert(run_ctx == curr_run_ctx);
-    serverAssert(!scriptIsTimedout());
-    /* Mark script as timedout */
+    serverAssert(!scriptIsTimedOut());
+    /* Mark script as timed out */
     run_ctx->flags |= SCRIPT_TIMEDOUT;
     blockingOperationStarts();
 }
 
-int scriptIsTimedout(void) {
+int scriptIsTimedOut(void) {
     return scriptIsRunning() && (curr_run_ctx->flags & SCRIPT_TIMEDOUT);
 }
 
@@ -81,7 +81,7 @@ client *scriptGetCaller(void) {
  * and also check if the run should be terminated. */
 int scriptInterrupt(scriptRunCtx *run_ctx) {
     if (run_ctx->flags & SCRIPT_TIMEDOUT) {
-        /* script already timedout
+        /* script already timed out
            we just need to precess some events and return */
         processEventsWhileBlocked();
         return (run_ctx->flags & SCRIPT_KILLED) ? SCRIPT_KILL : SCRIPT_CONTINUE;
@@ -97,7 +97,7 @@ int scriptInterrupt(scriptRunCtx *run_ctx) {
               "You can try killing the script using the %s command. Script name is: %s.",
               elapsed, (run_ctx->flags & SCRIPT_EVAL_MODE) ? "SCRIPT KILL" : "FUNCTION KILL", run_ctx->funcname);
 
-    enterScriptTimedoutMode(run_ctx);
+    enterScriptTimedOutMode(run_ctx);
     /* Once the script timeouts we reenter the event loop to permit others
      * some commands execution. For this reason
      * we need to mask the client executing the script from the event loop.
@@ -142,7 +142,7 @@ int scriptPrepareForRun(scriptRunCtx *run_ctx,
 
     if (!(script_flags & SCRIPT_FLAG_EVAL_COMPAT_MODE)) {
         if ((script_flags & SCRIPT_FLAG_NO_CLUSTER) && server.cluster_enabled) {
-            addReplyError(caller, "Can not run script on cluster, 'no-cluster' flag is set.");
+            addReplyError(caller, "Cannot run script on cluster, 'no-cluster' flag is set.");
             return C_ERR;
         }
 
@@ -159,7 +159,7 @@ int scriptPrepareForRun(scriptRunCtx *run_ctx,
              * 2. no disk error detected
              * 3. command is not `fcall_ro`/`eval[sha]_ro` */
             if (server.primary_host && server.repl_replica_ro && !obey_client) {
-                addReplyError(caller, "-READONLY Can not run script with write flag on readonly replica");
+                addReplyError(caller, "-READONLY Cannot run script with write flag on readonly replica");
                 return C_ERR;
             }
 
@@ -184,7 +184,7 @@ int scriptPrepareForRun(scriptRunCtx *run_ctx,
             }
 
             if (ro) {
-                addReplyError(caller, "Can not execute a script with write flag using *_ro command.");
+                addReplyError(caller, "Cannot execute a script with write flag using *_ro command.");
                 return C_ERR;
             }
 
@@ -201,7 +201,7 @@ int scriptPrepareForRun(scriptRunCtx *run_ctx,
         if (!client_allow_oom && server.pre_command_oom_state && server.maxmemory &&
             !(script_flags & (SCRIPT_FLAG_ALLOW_OOM | SCRIPT_FLAG_NO_WRITES))) {
             addReplyError(caller, "-OOM allow-oom flag is not set on the script, "
-                                  "can not run it when used memory > 'maxmemory'");
+                                  "cannot run it when used memory > 'maxmemory'");
             return C_ERR;
         }
 
@@ -243,8 +243,8 @@ int scriptPrepareForRun(scriptRunCtx *run_ctx,
     }
     if (client_allow_oom ||
         (!(script_flags & SCRIPT_FLAG_EVAL_COMPAT_MODE) && (script_flags & SCRIPT_FLAG_ALLOW_OOM))) {
-        /* Note: we don't need to test the no-writes flag here and set this run_ctx flag,
-         * since only write commands can are deny-oom. */
+        /* Note: we don't need to test the no-writes flag here when we set this run_ctx flag,
+         * since only write commands are deny-oom. */
         run_ctx->flags |= SCRIPT_ALLOW_OOM;
     }
 
@@ -265,8 +265,8 @@ void scriptResetRun(scriptRunCtx *run_ctx) {
     /* After the script done, remove the MULTI state. */
     run_ctx->c->flag.multi = 0;
 
-    if (scriptIsTimedout()) {
-        exitScriptTimedoutMode(run_ctx);
+    if (scriptIsTimedOut()) {
+        exitScriptTimedOutMode(run_ctx);
         /* Restore the client that was protected when the script timeout
          * was detected. */
         unprotectClient(run_ctx->original_client);
@@ -405,7 +405,7 @@ static int scriptVerifyOOM(scriptRunCtx *run_ctx, char **err) {
 
     /* If we reached the memory limit configured via maxmemory, commands that
      * could enlarge the memory usage are not allowed, but only if this is the
-     * first write in the context of this script, otherwise we can't stop
+     * first write in the context of this script; otherwise, we can't stop
      * in the middle. */
 
     if (server.maxmemory &&                          /* Maxmemory is actually enabled. */
@@ -520,8 +520,8 @@ static int scriptVerifyAllowStale(client *c, sds *err) {
         return C_OK;
     }
 
-    /* On stale replica, can not run the command */
-    *err = sdsnew("Can not execute the command on a stale replica");
+    /* On stale replica, cannot run the command */
+    *err = sdsnew("Cannot execute the command on a stale replica");
     return C_ERR;
 }
 

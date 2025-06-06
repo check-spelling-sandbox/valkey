@@ -49,9 +49,9 @@ test "Continuous slots distribution" {
 }
 
 test "ADDSLOTS command with several boundary conditions test suite" {
-    assert_error "ERR Invalid or out of range slot" {R 0 cluster ADDSLOTS 3001 aaa}
-    assert_error "ERR Invalid or out of range slot" {R 0 cluster ADDSLOTS 3001 -1000}
-    assert_error "ERR Invalid or out of range slot" {R 0 cluster ADDSLOTS 3001 30003}
+    assert_error "ERR Invalid or out-of-range slot" {R 0 cluster ADDSLOTS 3001 aaa}
+    assert_error "ERR Invalid or out-of-range slot" {R 0 cluster ADDSLOTS 3001 -1000}
+    assert_error "ERR Invalid or out-of-range slot" {R 0 cluster ADDSLOTS 3001 30003}
     
     assert_error "ERR Slot 3200 is already busy" {R 0 cluster ADDSLOTS 3200}
     assert_error "ERR Slot 8501 is already busy" {R 0 cluster ADDSLOTS 8501}
@@ -64,9 +64,9 @@ test "ADDSLOTSRANGE command with several boundary conditions test suite" {
     assert_error "ERR wrong number of arguments for 'cluster|addslotsrange' command" {R 0 cluster ADDSLOTSRANGE 3001 3020 3030}
 
     # Add multiple slots with invalid input slot
-    assert_error "ERR Invalid or out of range slot" {R 0 cluster ADDSLOTSRANGE 3001 3020 3030 aaa}
-    assert_error "ERR Invalid or out of range slot" {R 0 cluster ADDSLOTSRANGE 3001 3020 3030 70000}
-    assert_error "ERR Invalid or out of range slot" {R 0 cluster ADDSLOTSRANGE 3001 3020 -1000 3030}
+    assert_error "ERR Invalid or out-of-range slot" {R 0 cluster ADDSLOTSRANGE 3001 3020 3030 aaa}
+    assert_error "ERR Invalid or out-of-range slot" {R 0 cluster ADDSLOTSRANGE 3001 3020 3030 70000}
+    assert_error "ERR Invalid or out-of-range slot" {R 0 cluster ADDSLOTSRANGE 3001 3020 -1000 3030}
 
     # Add multiple slots when start slot number is greater than the end slot
     assert_error "ERR start slot number 3030 is greater than end slot number 3025" {R 0 cluster ADDSLOTSRANGE 3001 3020 3030 3025}
@@ -85,9 +85,9 @@ test "DELSLOTSRANGE command with several boundary conditions test suite" {
     assert_match "*0 3000*3051 3276*" [$master1 CLUSTER SLOTS]
 
     # Delete multiple slots with invalid input slot
-    assert_error "ERR Invalid or out of range slot" {R 0 cluster DELSLOTSRANGE 1000 2000 2100 aaa}
-    assert_error "ERR Invalid or out of range slot" {R 0 cluster DELSLOTSRANGE 1000 2000 2100 70000}
-    assert_error "ERR Invalid or out of range slot" {R 0 cluster DELSLOTSRANGE 1000 2000 -2100 2200}
+    assert_error "ERR Invalid or out-of-range slot" {R 0 cluster DELSLOTSRANGE 1000 2000 2100 aaa}
+    assert_error "ERR Invalid or out-of-range slot" {R 0 cluster DELSLOTSRANGE 1000 2000 2100 70000}
+    assert_error "ERR Invalid or out-of-range slot" {R 0 cluster DELSLOTSRANGE 1000 2000 -2100 2200}
     assert_match "* 0-3000 3051-3276*" [$master1 CLUSTER NODES]
     assert_match "*0 3000*3051 3276*" [$master1 CLUSTER SLOTS]
 

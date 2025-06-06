@@ -1,5 +1,5 @@
 start_server {tags {"incr"}} {
-    test {INCR against non existing key} {
+    test {INCR against nonexistent key} {
         set res {}
         append res [r incr novar]
         append res [r get novar]
@@ -87,7 +87,7 @@ start_server {tags {"incr"}} {
         assert {$old eq $new}
     } {} {needs:debug}
 
-    test {INCRBYFLOAT against non existing key} {
+    test {INCRBYFLOAT against nonexistent key} {
         r del novar
         list    [roundFloat [r incrbyfloat novar 1]] \
                 [roundFloat [r get novar]] \
@@ -176,10 +176,10 @@ start_server {tags {"incr"}} {
         r del mykeyincr
         assert_error "*ERR wrong number of arguments*" {r incr mykeyincr v}
         assert_error "*ERR wrong number of arguments*" {r decr mykeyincr v}
-        assert_error "*value is not an integer or out of range*" {r incrby mykeyincr v}
-        assert_error "*value is not an integer or out of range*" {r incrby mykeyincr 1.5}
-        assert_error "*value is not an integer or out of range*" {r decrby mykeyincr v}
-        assert_error "*value is not an integer or out of range*" {r decrby mykeyincr 1.5}
+        assert_error "*value is not an integer or out-of-range*" {r incrby mykeyincr v}
+        assert_error "*value is not an integer or out-of-range*" {r incrby mykeyincr 1.5}
+        assert_error "*value is not an integer or out-of-range*" {r decrby mykeyincr v}
+        assert_error "*value is not an integer or out-of-range*" {r decrby mykeyincr 1.5}
         assert_error "*value is not a valid float*" {r incrbyfloat mykeyincr v}
     }
 
