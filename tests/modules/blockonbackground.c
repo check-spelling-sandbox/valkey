@@ -51,7 +51,7 @@ int HelloBlock_Timeout(ValkeyModuleCtx *ctx, ValkeyModuleString **argv, int argc
     ValkeyModuleBlockedClient *bc = ValkeyModule_GetBlockedClientHandle(ctx);
     BlockPrivdata *block_privdata = ValkeyModule_GetBlockedClientPrivateData(ctx);
     blockClientMeasureTimeEnd(bc, block_privdata, 1);
-    return ValkeyModule_ReplyWithSimpleString(ctx,"Request timedout");
+    return ValkeyModule_ReplyWithSimpleString(ctx,"Request timed out");
 }
 
 /* Private data freeing callback for BLOCK.DEBUG command. */

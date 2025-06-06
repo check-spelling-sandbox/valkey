@@ -217,7 +217,7 @@ int bpop_reply_callback(ValkeyModuleCtx *ctx, ValkeyModuleString **argv, int arg
 int bpop_timeout_callback(ValkeyModuleCtx *ctx, ValkeyModuleString **argv, int argc) {
     VALKEYMODULE_NOT_USED(argv);
     VALKEYMODULE_NOT_USED(argc);
-    return ValkeyModule_ReplyWithSimpleString(ctx, "Request timedout");
+    return ValkeyModule_ReplyWithSimpleString(ctx, "Request timed out");
 }
 
 /* FSL.BPOP <key> <timeout> [NO_TO_CB]- Block clients until list has two or more elements.
@@ -277,7 +277,7 @@ int bpopgt_reply_callback(ValkeyModuleCtx *ctx, ValkeyModuleString **argv, int a
 int bpopgt_timeout_callback(ValkeyModuleCtx *ctx, ValkeyModuleString **argv, int argc) {
     VALKEYMODULE_NOT_USED(argv);
     VALKEYMODULE_NOT_USED(argc);
-    return ValkeyModule_ReplyWithSimpleString(ctx, "Request timedout");
+    return ValkeyModule_ReplyWithSimpleString(ctx, "Request timed out");
 }
 
 void bpopgt_free_privdata(ValkeyModuleCtx *ctx, void *privdata) {
@@ -350,7 +350,7 @@ int bpoppush_reply_callback(ValkeyModuleCtx *ctx, ValkeyModuleString **argv, int
 int bpoppush_timeout_callback(ValkeyModuleCtx *ctx, ValkeyModuleString **argv, int argc) {
     VALKEYMODULE_NOT_USED(argv);
     VALKEYMODULE_NOT_USED(argc);
-    return ValkeyModule_ReplyWithSimpleString(ctx, "Request timedout");
+    return ValkeyModule_ReplyWithSimpleString(ctx, "Request timed out");
 }
 
 void bpoppush_free_privdata(ValkeyModuleCtx *ctx, void *privdata) {
