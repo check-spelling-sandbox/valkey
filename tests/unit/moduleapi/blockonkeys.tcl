@@ -70,7 +70,7 @@ start_server {tags {"modules"}} {
         r del k
         set rd [valkey_deferring_client]
         $rd fsl.bpop k 1
-        assert_equal {Request timedout} [$rd read]
+        assert_equal {Request timed out} [$rd read]
     }
 
     test {Module client blocked on keys (no metadata): Blocked} {
@@ -95,7 +95,7 @@ start_server {tags {"modules"}} {
         set cid [$rd read]
         r fsl.push k 33
         $rd fsl.bpopgt k 35 1
-        assert_equal {Request timedout} [$rd read]
+        assert_equal {Request timed out} [$rd read]
         r client kill id $cid ;# try to smoke-out client-related memory leak
     }
 
@@ -226,7 +226,7 @@ start_server {tags {"modules"}} {
         $rd fsl.bpopgt k 35 0
         wait_for_blocked_clients_count 1
         r client unblock $cid timeout ;# try to smoke-out client-related memory leak
-        assert_equal {Request timedout} [$rd read]
+        assert_equal {Request timed out} [$rd read]
     }
 
     test {Module client blocked on keys (with metadata): Blocked, CLIENT UNBLOCK ERROR} {
