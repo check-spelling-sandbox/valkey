@@ -122,7 +122,7 @@ int clusterNodeIsMyself(clusterNode *n);
 clusterNode *getNodeByQuery(client *c, struct serverCommand *cmd, robj **argv, int argc, int *hashslot, int *ask);
 int clusterRedirectBlockedClientIfNeeded(client *c);
 void clusterRedirectClient(client *c, clusterNode *n, int hashslot, int error_code);
-void migrateCloseTimedoutSockets(void);
+void migrateCloseTimedOutSockets(void);
 unsigned int keyHashSlot(char *key, int keylen);
 int patternHashSlot(char *pattern, int length);
 int isValidAuxString(char *s, unsigned int length);
