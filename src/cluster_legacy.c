@@ -1213,8 +1213,8 @@ void clusterInit(void) {
     if (!server.cluster_port && port > (65535 - CLUSTER_PORT_INCR)) {
         serverLog(LL_WARNING,
                   "%s port number too high. "
-                  "Cluster communication port is 10,000 port "
-                  "numbers higher than your %s port. "
+                  "Cluster communication port is 10,000 ports "
+                  "above your %s port. "
                   "Your %s port number must be 55535 or less.",
                   SERVER_TITLE, SERVER_TITLE, SERVER_TITLE);
         exit(1);
