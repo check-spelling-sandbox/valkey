@@ -33,4 +33,4 @@ jobs:
           ./runtest --verbose --tags -slow --dump-logs
       - name: unit tests
         run: |
-          ./build-release/bin/valkey-unit-tests
+          ./build-release/bin/valkey-unit-tests --seed D7E26CF9E0E78062C09629FF4791658E97C9A00E5C752F0CE933655887184709AD7A57A0E9F84C090C365A51EED2B6855075C7436F708B9C47BA13684ECCFDF0
