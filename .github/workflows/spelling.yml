@@ -1,15 +1,9 @@
 name: Check Spelling
 
 # Comment management is handled through a secondary job, for details see:
-# https://github.com/check-spelling/check-spelling/wiki/Feature%3A-Restricted-Permissions
+# https://docs.check-spelling.dev/Feature:-Restricted-Permissions
 #
-# `jobs.comment-push` runs when a push is made to a repository and the `jobs.spelling` job needs to make a comment
-#   (in odd cases, it might actually run just to collapse a comment, but that's fairly rare)
-#   it needs `contents: write` in order to add a comment.
-#
-# `jobs.comment-pr` runs when a pull_request is made to a repository and the `jobs.spelling` job needs to make a comment
-#   or collapse a comment (in the case where it had previously made a comment and now no longer needs to show a comment)
-#   it needs `pull-requests: write` in order to manipulate those comments.
+# Note that jobs.spelling.name here must match an entry in on.workflow_run.workflows[] there.
 
 # Updating pull request branches is managed via comment handling.
 # For details, see: https://github.com/check-spelling/check-spelling/wiki/Feature:-Update-expect-list
@@ -54,7 +48,9 @@ name: Check Spelling
 #   spelling:
 #     # remove `security-events: write` and `use_sarif: 1`
 #     # remove `experimental_apply_changes_via_bot: 1`
-#     ... otherwise adjust the `with:` as you wish
+#     ... otherwise, adjust the `with:` as you wish
+
+# on.pull_request(_target).edited is only needed for with.check_commit_messages: title | description
 
 on:
   push:
@@ -66,12 +62,16 @@ on:
     branches:
       - '**'
     types:
+      - 'edited'
       - 'opened'
       - 'reopened'
       - 'synchronize'
+  merge_group:
   issue_comment:
     types:
       - 'created'
+
+permissions: {}
 
 jobs:
   spelling:
@@ -84,7 +84,7 @@ jobs:
     outputs:
       followup: ${{ steps.spelling.outputs.followup }}
     runs-on: ubuntu-latest
-    if: ${{ contains(github.event_name, 'pull_request') || github.event_name == 'push' }}
+    if: ${{ (contains(github.event_name, 'pull_request') && github.event.pull_request.state == 'open') || github.event_name == 'push' || github.event_name == 'merge_group' }}
     concurrency:
       group: spelling-${{ github.event.pull_request.number || github.ref }}
       # note: If you use only_check_changed_files, you do not want cancel-in-progress
@@ -97,57 +97,159 @@ jobs:
           suppress_push_for_open_pull_request: ${{ github.actor != 'dependabot[bot]' && 1 }}
           checkout: true
           check_file_names: 1
+          check_commit_messages: commits, title, description
           spell_check_this: check-spelling/spell-check-this@prerelease
-          post_comment: 0
-          use_magic_file: 1
           report-timing: 1
           warnings: bad-regex,binary-file,deprecated-feature,ignored-expect-variant,large-file,limited-references,no-newline-at-eof,noisy-file,non-alpha-in-dictionary,token-is-substring,unexpected-line-ending,whitespace-in-dictionary,minified-file,unsupported-configuration,no-files-to-check,unclosed-block-ignore-begin,unclosed-block-ignore-end
           experimental_apply_changes_via_bot: 1
-          use_sarif: ${{ (!github.event.pull_request || (github.event.pull_request.head.repo.full_name == github.repository)) && 1 }}
-          check_extra_dictionaries: ""
-          dictionary_source_prefixes: >
+          use_sarif: 1
+          extra_dictionary_limit: 20
+          allow-hunspell: false
+          load-config-from: |
             {
-            "cspell": "https://raw.githubusercontent.com/check-spelling/cspell-dicts/v20241114/dictionaries/"
+              "pr-trusted-keys": [
+                "check_extra_dictionaries",
+                "dictionary_source_prefixes",
+                "extra_dictionaries",
+                ""
+              ],
+              "pr-base-keys": [
+                ""
+              ],
+              "": []
             }
-          extra_dictionaries: |
-            cspell:software-terms/softwareTerms.txt
-            cspell:lua/lua.txt
-            cspell:php/php.txt
-            cspell:python/python/python-lib.txt
-            cspell:cpp/stdlib-c.txt
-            cspell:node/node.txt
-            cspell:python/common/extra.txt
-            cspell:java/java.txt
-            cspell:dart/dart.txt
-            cspell:lorem-ipsum/dictionary.txt
-            cspell:fullstack/fullstack.txt
-            cspell:npm/npm.txt
-            cspell:typescript/typescript.txt
-            cspell:filetypes/filetypes.txt
-            cspell:java/java-terms.txt
-            cspell:r/r.txt
-            cspell:golang/go.txt
-            cspell:mnemonics/mnemonics.txt
-            cspell:html/html.txt
-            cspell:django/django.txt
-            cspell:cpp/stdlib-cpp.txt
-            cspell:aws/aws.txt
-            cspell:cpp/stdlib-cmath.txt
-            cspell:shell/shell-all-words.txt
-            cspell:dotnet/dotnet.txt
-            cspell:cpp/ecosystem.txt
-            cspell:scala/scala.txt
-            cspell:lisp/lisp.txt
-            cspell:python/python/python.txt
-            cspell:cpp/compiler-msvc.txt
-            cspell:cpp/lang-jargon.txt
-            cspell:public-licenses/generated/public-licenses.txt
-            cspell:rust/rust.txt
-            cspell:cpp/lang-keywords.txt
-            cspell:ruby/ruby.txt
-            cspell:css/css.txt
-            cspell:fonts/fonts.txt
-            cspell:cpp/compiler-clang-attributes.txt
+
+  locales:
+    name: Check for localizations
+    runs-on: ubuntu-slim
+    permissions:
+      contents: read
+    outputs:
+      go: ${{ steps.supported.outputs.go }}
+      locales: ${{ steps.supported.outputs.matrix }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v7
+      - name: checkout merge
+        if: github.event.pull_request.number && (contains(github.event_name, 'pull_request'))
+        uses: check-spelling/checkout-merge@162501326ecbc16584b42b58cecadc367ad1bb33
+      - name: find supported localizations
+        id: supported
+        run: |
+          : find supported localizations
+          files=$(mktemp)
+          git ls-files -z > "$files"
+          locales=$(
+            for a in $(find .github/actions/spelling-locales -mindepth 1 -maxdepth 1 -type d ! -name '.*' ! -name 'common'); do
+              a="$a" perl -e '
+                use File::Basename;
+                sub readfile {
+                  my @lines;
+                  open F, q{<}, $_;
+                  while (<F>) {
+                    s/\r\n/\n/;
+                    push @lines, $_;
+                  }
+                  local $f = join "\n", @lines;
+                  $f =~ s/^#.*\r?\n//gm;
+                  $f =~ s/^\s*\r?\n//gm;
+                  $f =~ s/\r\n/\n/gm;
+                  $f =~ s/\n$//;
+                  return $f;
+                }
+                sub readstring {
+                  my @files = glob($_[0]);
+                  my @lines = map readfile, @files;
+                  my $f = join "\n", @lines;
+                  $f =~ s/(.*)\r?\n/(?:$1)|/g;
+                  return $f;
+                }
+                sub QE {
+                  my ($re) = @_;
+                  $re =~ s/\\Q(.*?)\\E/quotemeta($1)/eg;
+                  return $re;
+                }
+                my $a = "$ENV{a}";
+                my $e = QE(readstring("$a/excludes.txt"));
+                $e = q<^$> if $e eq "";
+                my $o = QE(readstring("$a/only.txt"));
+                $o = q<.> if $o eq "";
+                my $found = 0;
+                {
+                  local $/ = "\0";
+                  while (<>) {
+                    chomp;
+                    next if /$e/; next unless /$o/;
+                    $found = 1;
+                    last;
+                  }
+                }
+                if ($found) {
+                  my $b = basename $a;
+                  my $n = $b;
+                  my $r = "$a/README.md";
+                  if (-e $r && open (my $readme, q{<}, $r)) {
+                    my $name = <$readme>;
+                    $name =~ s/^\s*#\s*//;
+                    $name =~ s/\s*$//;
+                    $n = $name if length $name;
+                    close $readme;
+                  }
+                  print qq<{"locale":"$b","name":"Spelling ($n)","path":"$a"}\n>;
+                }
+              ' "$files"
+            done
+          )
+          (
+          if [ -n "$locales" ]; then
+            echo "matrix={\"include\":$(echo "$locales" | jq -c -s)}"
+            echo go=1
+          fi
+          ) | tee -a "$GITHUB_OUTPUT"
+
+  spelling-localizations:
+    needs:
+    - locales
+    strategy:
+      fail-fast: false
+      matrix: ${{ needs.locales.outputs.locales && fromJson(needs.locales.outputs.locales) }}
+    runs-on: ubuntu-latest
+    name: ${{ matrix.name }}
+    permissions:
+      contents: read
+      pull-requests: read
+      actions: read
+      security-events: write
+    if: ${{ needs.locales.outputs.go }}
+    steps:
+      - uses: check-spelling/check-spelling@prerelease
+        with:
+          config: ${{ matrix.path }}
+          use_sarif: 1
+          checkout: true
+          report_title_suffix: ${{ matrix.locale }}
+          load-config-from: |
+            {
+              "pr-base-keys": [
+                "dictionary_url",
+                "check_extra_dictionaries",
+                "dictionary_source_prefixes",
+                "extra_dictionaries",
+                "ignore-pattern",
+                "upper-pattern",
+                "lower-pattern",
+                "not-lower-pattern",
+                "not-upper-or-lower-pattern",
+                "punctuation-pattern",
+                "allow-hunspell",
+                ""
+              ],
+              "pr-trusted-keys": [
+                ""
+              ],
+              "": []
+            }
 
   update:
     name: Update PR
@@ -155,11 +257,12 @@ jobs:
       contents: write
       pull-requests: write
       actions: read
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-slim
     if: ${{
       github.event_name == 'issue_comment' &&
       github.event.issue.pull_request &&
-      contains(github.event.comment.body, '@check-spelling-bot apply') &&
+      contains(github.event.comment.body, '@check-spelling-bot') &&
+      contains(github.event.comment.body, 'apply') &&
       contains(github.event.comment.body, 'https://')
       }}
     concurrency:

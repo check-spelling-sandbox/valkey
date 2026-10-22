@@ -10,6 +10,7 @@
 (?:^|/)pyproject.toml
 (?:^|/)vendor/
 (?:^|/|\b)requirements(?:-dev|-doc|-test|)\.txt$
+-lock\.yaml$
 [^/]\.rdb$
 \.a$
 \.ai$
@@ -80,13 +81,12 @@
 \.xpm$
 \.xz$
 \.zip$
-^\.github/actions/spelling/
-^\Q.config/typos.toml\E$
-^\Q.github/workflows/spelling.yml\E$
-^\Qdeps/jemalloc/config.stamp.in\E$
+^\.github/actions/spelling
+^\.github/workflows/spelling.*\.yml$
 ^CODE_OF_CONDUCT\.md$
 ^deps/.*/
-^src/crc16_slottable\.h$
+^REUSE\.toml$
+^src/crc16_slottable\.c$
+^src/module\.c$
 ^tests/assets/rdb-preamble\.aof$
-^tests/integration/valkey-cli\.tcl$
 ignore$

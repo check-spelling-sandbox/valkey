@@ -81,158 +81,137 @@
 \b(?:)z(?![aehiou])(?=[a-z]{2,})
 \b(?:)z(?:set|try|union)
 
-(?:(?<=\b[A-Z]{2})|(?<=\b[A-Z]{3})|(?<=\b[A-Z]{4})|(?<=\b[A-Z]{5}))ed\b
-
-Georg Nees
-
-\br geoadd points .*
-
-create_quicklist lst ".*"
-
-assert_(?:equal|match) .*
-
-# list.tcl
-r lpush notfoo.*
-
-\(unsigned char \*\)"\w+"
-
-\\a(?=\w)
-
-# list-3.tcl
-set mylist \{.+\}
-
 # Automatically suggested patterns
 
-# hit-count: 2355 file-count: 58
-# hex runs
-\b[0-9a-fA-F]{16,}\b
-
-# hit-count: 1746 file-count: 610
+# hit-count: 895 file-count: 274
 # #includes
 ^\s*#include\s*(?:<.*?>|".*?")
 
-# hit-count: 1691 file-count: 100
-# hex digits including css/html color classes:
+# hit-count: 593 file-count: 73
+# hex digits including css/html color classes
 (?:[\\0][xX]|\\u\{?|[uU]\+|#x?|%23|&H)[0-9_a-fA-FgGrR]*?[a-fA-FgGrR]{2,}[0-9_a-fA-FgGrR]*(?:[uUlL]{0,3}|[iu]\d+)\b
 
-# hit-count: 907 file-count: 112
-# libraries
-(?:\b|_)[Ll]ib(?:re(?=office)|)(?!era[lt]|ero|erty|rar(?:i(?:an|es)|y))(?=[a-z])
+# hit-count: 563 file-count: 61
+# Library prefix
+# e.g., `lib`+`archive`, `lib`+`raw`, `lib`+`unwind`
+# (ignores some words that happen to start with `lib`)
+(?:\b|_)[Ll]ib(?!era[lt])(?:re(?=office)|era|)(?!ero|erty|rar(?:i(?:an|es)|y))(?=[a-z])
 
-# hit-count: 874 file-count: 75
-# Compiler flags (Unix, Java/Scala)
-# Use if you have things like `-Pdocker` and want to treat them as `docker`
-(?:^|[\t ,>"'`=(#])-(?:D(?!EBUG|ENIED)|W(?!RONG|riting)|[PXY]|f(?!ail|ill|orce|orm)|l(?!ib|ine|int|ength))(?=[A-Z]{2,}|[A-Z][a-z]|[a-z]{2,})
-
-# hit-count: 393 file-count: 51
-# version suffix <word>v#
-(?<!re)(?:(?<=[A-Z]{2})V|(?<=[a-z]{2}|[A-Z]{2})v)\d+(?:\b|(?=[a-zA-Z_]))
-
-# hit-count: 267 file-count: 136
-# https/http/file urls
-(?:\b(?:https?|ftp|file)://)[-A-Za-z0-9+&@#/*%?=~_|!:,.;]+[-A-Za-z0-9+&@#/*%=~_|]
-
-# hit-count: 247 file-count: 66
+# hit-count: 384 file-count: 61
 # C network byte conversions
 (?:\d|\bh)to(?!ken)(?=[a-z])|to(?=[adhiklpun]\()
 
-# hit-count: 239 file-count: 47
-# in check-spelling@v0.0.22+, printf markers aren't automatically consumed
+# hit-count: 286 file-count: 43
 # printf markers
 (?<!\\)\\[nrt](?=[a-z]{2,})
 
-# hit-count: 193 file-count: 45
-# alternate printf markers if you run into latex and friends
-(?<!\\)\\[nrt](?=[a-z]{2,})(?=.*['"`])
+# hit-count: 198 file-count: 37
+# hex runs
+\b(?=(?:[a-fA-F]{0,2}\d)*[a-fA-F]{3})[0-9a-fA-F]{16,}\b
 
-# hit-count: 145 file-count: 101
-# copyright
-Copyright (?:\([Cc]\)|)(?:[-\d, ]|and)+(?: [A-Z][a-z]+ (?:[A-Z]\. |)[A-Z][a-z]+,?)+(?:\s<.*?>|)
-
-# hit-count: 105 file-count: 15
-# GitHub actions
-\buses:\s+[-\w.]+/[-\w./]+@[-\w.]+
-
-# hit-count: 60 file-count: 14
+# hit-count: 185 file-count: 40
 # Repeated letters
-\b([a-z])\g{-1}{2,}\b
+\b([A-Za-z])\g{-1}{2,}\b
 
-# hit-count: 30 file-count: 7
+# hit-count: 182 file-count: 83
+# https/http/file urls
+(?:\b(?:https?|ftp|file)://)[-A-Za-z0-9+&@#/*%?=~_|!:,.;\\]+[-A-Za-z0-9+&@#/*%=~_|]
+
+# hit-count: 147 file-count: 20
+# GitHub actions
+\buses:\s+(['"]?)[-\w.]+/[-\w./]+@[-\w.]+\g{-1}
+
+# hit-count: 78 file-count: 27
+# regex choice
+\((?:\?:|)[^)|]+(?<! )\|(?!(?:jq|xargs)\b)[^)| ][^)]*\)
+
+# hit-count: 63 file-count: 6
 # Intel intrinsics
 _mm\d*_(?!dd)\w+
 
-# hit-count: 26 file-count: 2
-# latex (check-spelling >= 0.0.22)
-\\\w{2,}\{
+# hit-count: 61 file-count: 17
+# version suffix {word}v#
+(?<!re)(?:(?<=[A-Z]{2})V|(?<=[a-z]{2}|[A-Z]{2})v)\d+(?:\b|(?=[a-zA-Z_]))
 
-# hit-count: 23 file-count: 5
+# hit-count: 34 file-count: 34
+# copyright
+Copyright (?:\([Cc]\)|©|)(?:[-\d, ]|and)+(?: [A-Z][a-z]+ [A-Z][a-z]+,?)+
+
+# hit-count: 20 file-count: 4
 # ANSI color codes
-(?:\\(?:u00|x)1[Bb]|\\03[1-7]|\x1b|\\u\{1[Bb]\})\[\d+(?:;\d+)*m
+(?:\\(?:u00|x)1[Bb]|\\03[1-7]|\x1b|\\u\{1[Bb]\})\[(?:\d+(?:;\d+)*|)m
 
-# hit-count: 19 file-count: 5
-# Markdown anchor links
-\(#\S*?[a-zA-Z]\S*?\)
+# hit-count: 13 file-count: 1
+# unicode escaped characters (4)
+\\u[0-9a-fA-F]{4}
 
-# hit-count: 16 file-count: 6
-# uuid:
-\b[0-9a-fA-F]{8}-(?:[0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}\b
+# hit-count: 12 file-count: 7
+# imports
+^import\s+(?:(?:static|type)\s+|)(?:\{(?:,?\s*(?:\w*(?:\s+as\s+\w+\s*|)|\*))*\s*\}|[\w.]+)(?:\s+from (['"]).*?|)
 
-# hit-count: 14 file-count: 8
+# hit-count: 10 file-count: 4
+# Non-English
+# Even repositories expecting pure English content can unintentionally have Non-English content... People will occasionally mistakenly enter [homoglyphs](https://en.wikipedia.org/wiki/Homoglyph) which are essentially typos, and using this pattern will mean check-spelling will not complain about them.
+# .
+# If the content to be checked should be written in English and the only Non-English items will be people's names, then you can consider adding this.
+# .
 # Alternatively, if you're using check-spelling v0.0.25+, and you would like to _check_ the Non-English content for spelling errors, you can. For information on how to do so, see:
 # https://docs.check-spelling.dev/Feature:-Configurable-word-characters.html#unicode
 [a-zA-Z]*[ÀÁÂÃÄÅÆČÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæčçèéêëìíîïðñòóôõöøùúûüýÿĀāŁłŃńŅņŒœŚśŠšŜŝŸŽžź][a-zA-Z]{3}[a-zA-ZÀÁÂÃÄÅÆČÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæčçèéêëìíîïðñòóôõöøùúûüýÿĀāŁłŃńŅņŒœŚśŠšŜŝŸŽžź]*|[a-zA-Z]{3,}[ÀÁÂÃÄÅÆČÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæčçèéêëìíîïðñòóôõöøùúûüýÿĀāŁłŃńŅņŒœŚśŠšŜŝŸŽžź]|[ÀÁÂÃÄÅÆČÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝßàáâãäåæčçèéêëìíîïðñòóôõöøùúûüýÿĀāŁłŃńŅņŒœŚśŠšŜŝŸŽžź][a-zA-Z]{3,}
 
-# hit-count: 14 file-count: 7
-# This does not cover multiline strings, if your repository has them,
-# you'll want to remove the `(?=.*?")` suffix.
-# The `(?=.*?")` suffix should limit the false positives rate
-# printf
-%(?:(?:(?:hh?|ll?|[jzt])?(?:d(?!isable)|[iuoxn])|l?[cs]|L?[fega]|p)(?=[a-z]{2,})|(?:X|L?[FEGA])(?=[a-zA-Z]{2,}))(?!%)(?=[_a-zA-Z]+(?!%)\b)(?=.*?['"])
+# hit-count: 8 file-count: 6
+# set arguments
+\b(?:bash|(?<!\.)sh|set)(?:\s+[-+][abefimouxE]{1,2})*\s+[-+][abefimouxE]{3,}(?:\s+[-+][abefimouxE]+)*
 
-# hit-count: 14 file-count: 1
-# perl regex test
-[!=]~ (?:/.*/|m\{.*?\}|m<.*?>|m([|!/@#,;']).*?\g{-1})
-
-# hit-count: 10 file-count: 3
+# hit-count: 8 file-count: 2
 # python
-\b(?i)py(?!gments|gmy|lon|ramid|ro|th)(?=[a-z]{2,})
+\b(?i)py(?!gment|gmy|lon|ramid|ro|th)(?=[a-z]{2,})
 
-# hit-count: 8 file-count: 1
-# Contributor
-\[[^\]]+\]\(https://github\.com/[^/\s"]+/?\)
+# hit-count: 6 file-count: 6
+# golang regular expression
+(?<!")\br".+?"
+
+# hit-count: 6 file-count: 2
+# URL escaped characters
+%[0-9A-F][A-F](?=[A-Za-z])
+
+# hit-count: 5 file-count: 3
+# tar arguments
+\b(?:\\n|)g?tar(?:\.exe|)(?:\s-C \S+|(?:\s+--[-a-zA-Z]+|\s+-[a-zA-Z]+|\s[ABGJMOPRSUWZacdfh-pr-xz]+\b)(?:=[^ ]*|))+
+
+# hit-count: 5 file-count: 2
+# Alternative printf
+# %s
+%(?:s(?=[a-z]{2,}))(?!%)(?=[_a-zA-Z]+(?!%[^s])\b)(?=.*?['"])
 
 # hit-count: 4 file-count: 3
-# tar arguments
-\b(?:\\n|)g?tar(?:\.exe|)(?:(?:\s+--[-a-zA-Z]+|\s+-[a-zA-Z]+|\s[ABGJMOPRSUWZacdfh-pr-xz]+\b)(?:=[^ ]*|))+
+# sha-... -- uses a fancy capture
+(\\?['"]|&quot;)[0-9a-f]{40,}\g{-1}
+
+# hit-count: 4 file-count: 2
+# Regular expression for word breaks
+\\b(?=[a-z]{2})
+
+# hit-count: 3 file-count: 3
+# Python string prefix / binary prefix
+# Note that there's a high false positive rate, remove the `?=` and search for the regex to see if the matches seem like reasonable strings
+(?<!['"])\b(?:B|BR|Br|F|FR|Fr|R|RB|RF|Rb|Rf|U|UR|Ur|b|bR|br|f|fR|fr|r|rB|rF|rb|rf|u|uR|ur)['"](?=[A-Z]{3,}|[A-Z][a-z]{2,}|[a-z]{3,})
 
 # hit-count: 2 file-count: 2
-# imports
-^import\s+(?:(?:static|type)\s+|)(?:[\w.]|\{\s*\w*?(?:,\s*(?:\w*|\*))+\s*\})+
-
-# hit-count: 1 file-count: 1
-# css fonts
-\bfont(?:-family|):[^;}]+
+# LaTeX
+\\\w{2,}\{
 
 # hit-count: 1 file-count: 1
 # C# includes
 ^\s*using [^;]+;
 
 # hit-count: 1 file-count: 1
-# Python string prefix / binary prefix
-# Note that there's a high false positive rate, remove the `?=` and search for the regex to see if the matches seem like reasonable strings
-(?<!['"])\b(?:B|BR|Br|F|FR|Fr|R|RB|RF|Rb|Rf|U|UR|Ur|b|bR|br|f|fR|fr|r|rB|rF|rb|rf|u|uR|ur)['"](?=[A-Z]{3,}|[A-Z][a-z]{2,}|[a-z]{3,})
-
-# hit-count: 1 file-count: 1
-# sed regular expressions
-sed 's/(?:[^/]*?[a-zA-Z]{3,}[^/]*?/){2}
-
-# hit-count: 1 file-count: 1
 # go install
 go install(?:\s+[a-z]+\.[-@\w/.]+)+
 
 # hit-count: 1 file-count: 1
-# URL escaped characters
-%[0-9A-F][A-F](?=[A-Za-z])
+# Markdown anchor links
+\(#\S*?[a-zA-Z]\S*?\)
 
 # Questionably acceptable forms of `in to`
 # Personally, I prefer `log into`, but people object
@@ -247,17 +226,19 @@ go install(?:\s+[a-z]+\.[-@\w/.]+)+
 
 # acceptable duplicates
 # ls directory listings
-[-bcdlpsw](?:[-r][-w][-SsTtx]){3}[\.+*]?\s+\d+\s+\S+\s+\S+\s+[.\d]+(?:[KMGT]|)\s+
+[-bcdlpsw](?:[-r][-w][-SsTtx]){3}[\.+*]?\s+\d+\s+\S+\s+\S+\s+[.,\d]+(?:[KMGT]|)\s+
 # mount
 \bmount\s+-t\s+(\w+)\s+\g{-1}\b
 # C types and repeated CSS values
-\s(arg|auto|bla|buffalo|center|defaults|div|ele|end|hash|inherit|key|left|LEFT|long|Long|LONG|none|normal|solid|src|test|thin|transparent|VALKEY|very|Zhao)(?:\s\g{-1})+\s
+\s(arg|auto|await|bla|buffalo|center|defaults|div|ele|end|hash|inherit|key|left|LEFT|long|Long|LONG|none|normal|solid|src|test|thin|transparent|VALKEY|very|Zhao)(?:\s\g{-1})+\s
 # C enum and struct
 \b(?:enum|struct)\s+(\w+)\s+\g{-1}\b
 # go templates
 \s(\w+)\s+\g{-1}\s+\`(?:graphql|inject|json|yaml):
 # doxygen / javadoc / .net
 (?:[\\@](?:brief|defgroup|groupname|link|t?param|return|retval)|(?:public|private|\[Parameter(?:\(.+\)|)\])(?:\s+(?:static|override|readonly|required|virtual))*)(?:\s+\{\w+\}|)\s+(\w+)\s+\g{-1}\s
+# C# getter/setter
+\s(\w+)\s+\g{-1}\s*\{\s*[gs]et;
 
 # macOS file path
 (?:Contents\W+|(?!iOS)/)MacOS\b

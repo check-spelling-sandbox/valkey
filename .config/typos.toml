@@ -4,6 +4,7 @@
 extend-exclude = [
     ".git/",
     ".github/actions/spelling/",
+    ".github/actions/spelling-locales",
     "deps/",
     # crc16_slottable is primarily pre-generated random strings.
     "src/crc16_slottable.c",
