@@ -661,7 +661,7 @@ start_server {tags {"string"}} {
         assert_error "WRONGTYPE*" {r setbit mykey 0 1}
     }
 
-    test "SETBIT with out of range bit offset" {
+    test "SETBIT with out-of-range bit offset" {
         r del mykey
         assert_error "*out of range*" {r setbit mykey [expr 4*1024*1024*1024] 1}
         assert_error "*out of range*" {r setbit mykey -1 1}
@@ -795,7 +795,7 @@ start_server {tags {"string"}} {
         assert_error "WRONGTYPE*" {r setrange mykey 0 bar}
     }
 
-    test "SETRANGE with out of range offset" {
+    test "SETRANGE with out-of-range offset" {
         r del mykey
         assert_error "*maximum allowed size*" {r setrange mykey [expr 512*1024*1024-4] world}
 

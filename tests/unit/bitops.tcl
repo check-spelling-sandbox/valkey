@@ -62,7 +62,7 @@ start_server {tags {"bitops"}} {
         assert {[r bitcount no-key 0 1000 bit] == 0}
     }
 
-    test {BITCOUNT returns 0 with out of range indexes} {
+    test {BITCOUNT returns 0 with out-of-range indexes} {
         r set str "xxxx"
         assert {[r bitcount str 4 10] == 0}
         assert {[r bitcount str 32 87 bit] == 0}

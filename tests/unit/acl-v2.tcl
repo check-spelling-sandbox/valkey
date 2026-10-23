@@ -1136,7 +1136,7 @@ start_server {tags {"acl external:skip"}} {
         
         # Try one beyond max
         catch {$r2 select [expr {$max_db + 1}]} err
-        # Should fail with out of range, not permission error
+        # Should fail with out-of-range, not permission error
         assert_match "*out of range*" $err
     }
     
