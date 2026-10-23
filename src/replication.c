@@ -1365,7 +1365,7 @@ int startBgsaveForReplication(int mincapa, int req, int rdbver) {
     }
     if (server.debug_pause_after_fork) debugPauseProcess();
 
-    /* If the target is socket, rdbSaveToReplicasSockets() already setup the replicas
+    /* If the target is socket, rdbSaveToReplicasSockets() already set up the replicas
      * for a full resync. For a disk target do it now, and remember that dump.rdb was
      * generated for replication so that we can later delete the file if needed. Note
      * that we don't set the flag if the feature is disabled; otherwise, it would never

@@ -522,7 +522,7 @@ int prepareClientToWrite(client *c) {
     serverAssert(c->conn);
 
     /* Schedule the client to write the output buffers to the socket, unless
-     * it should already be setup to do so (it has already pending data). */
+     * it should already be set up to do so (it has already pending data). */
     if (!clientHasPendingReplies(c)) putClientInPendingWriteQueue(c);
 
     if (!isDeferredReplyEnabled(c)) c->flag.buffered_reply = 1;
