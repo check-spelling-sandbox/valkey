@@ -1481,7 +1481,7 @@ void syncCommand(client *c) {
 
     /* Try a partial resynchronization if this is a PSYNC command.
      * If it fails, we continue with usual full resynchronization, however
-     * when this happens replicationSetupReplicaForFullResync will replied
+     * when this happens replicationSetupReplicaForFullResync will reply
      * with:
      *
      * +FULLRESYNC <replid> <offset>
