@@ -55,7 +55,7 @@ typedef struct streamIterator {
 typedef struct streamCG {
     streamID last_id;       /* Last delivered (not acknowledged) ID for this
                                group. Consumers that will just ask for more
-                               messages will served with IDs > than this. */
+                               messages will be served IDs > than this. */
     long long entries_read; /* In a perfect world (CG starts at 0-0, no dels, no
                                XGROUP SETID, ...), this is the total number of
                                group reads. In the real world, the reasoning behind
