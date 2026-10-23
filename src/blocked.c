@@ -446,7 +446,7 @@ void handleClientsBlockedOnKeys(void) {
  * The 'type' argument is BLOCKED_LIST,BLOCKED_ZSET or BLOCKED_STREAM depending on the kind of operation we are
  * waiting for an empty key in order to awake the client. The client is blocked
  * for all the 'numkeys' keys as in the 'keys' argument.
- * The client will unblocked as soon as one of the keys in 'keys' value was updated.
+ * The client will be unblocked as soon as one of the keys in 'keys' value is updated.
  * the parameter unblock_on_nokey can be used to force client to be unblocked even in the case the key
  * is updated to become unavailable, either by type change (override), deletion or swapdb */
 void blockForKeys(client *c, int btype, robj **keys, int numkeys, mstime_t timeout, int unblock_on_nokey) {
