@@ -864,7 +864,7 @@ int zsetScore(robj *zobj, sds member, double *score) {
  *            the current element score. If the element does not exist, we
  *            assume 0 as previous score.
  * ZADD_NX:   Perform the operation only if the element does not exist.
- * ZADD_XX:   Perform the operation only if the element already exist.
+ * ZADD_XX:   Perform the operation only if the element already exists.
  * ZADD_GT:   Perform the operation on existing elements only if the new score is
  *            greater than the current score.
  * ZADD_LT:   Perform the operation on existing elements only if the new score is
