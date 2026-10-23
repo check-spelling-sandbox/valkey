@@ -1166,7 +1166,7 @@ foreach type {single multiple single_multiple} {
         set r2 [valkey_client]
         $r2 smove srcset{t} dstset{t} a
 
-        # The dstset is actually unchanged, multi should success
+        # The dstset is actually unchanged, multi should succeed
         r exec
         set res [r scard dstset{t}]
         assert_equal $res 2
